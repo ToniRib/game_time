@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   entry: {
     main: "./lib/index.js",
@@ -17,6 +15,6 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.json', '.scss', 'css']
+    extensions: ['', '.js', '.json', '.scss', '.css']
   }
 };
