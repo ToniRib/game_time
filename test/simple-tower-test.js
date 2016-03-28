@@ -1,5 +1,6 @@
 var assert = require('chai').assert;
 const SimpleTower = require('../lib/simple-tower.js');
+const SimpleEnemy = require('../lib/simple-enemy.js');
 
 it('tower is a function', function (){
   assert.typeOf(SimpleTower, 'function');
@@ -47,5 +48,32 @@ describe('shoot functionality', function() {
     tower.shoot();
     let lastShot = tower.timeSinceLastShot;
     assert.notEqual(firstShot, lastShot, "Tower did not shoot");
+  });
+
+  it('cannot shoot if enough time has not elapsed', function() {
+    let tower = new SimpleTower({x: 1, y: 2});
+    let currentTime = new Date().getTime();
+    tower.fireRate = 100000;
+    assert.isNotTrue(tower.canShoot(currentTime));
+  });
+
+  describe('range functionality', function(){
+    it('enemy is in range', function(){
+      let tower = new SimpleTower({x: 1, y: 2});
+      let enemy = new SimpleEnemy({x: 2, y: 2});
+      assert(tower.inRange(enemy));
+    });
+
+    it('enemy is in range at edge of range', function(){
+      let tower = new SimpleTower({x: 1, y: 2});
+      let enemy = new SimpleEnemy({x: 5, y: 2});
+      assert(tower.inRange(enemy));
+    });
+
+    it('enemy is not in range', function(){
+      let tower = new SimpleTower({x: 1, y: 2});
+      let enemy = new SimpleEnemy({x: 100, y: 100});
+      assert.isNotTrue(tower.inRange(enemy));
+    });
   });
 });
