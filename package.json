@@ -1,7 +1,7 @@
 {
-  "name": "game-time-starter-kit",
+  "name": "tower-defense",
   "version": "1.0.0",
-  "description": "A starter kit for Turing School's Game Time project.",
+  "description": "Jordan and Toni's Game Time project.",
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/turingschool-examples/game-time-starter-kit.git"
+    "url": "https://github.com/ToniRib/game_time.git"
   },
-  "author": "Steve Kinney",
+  "author": "Jordan Lawler and Toni Rib",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/turingschool-examples/game-time-starter-kit/issues"
+    "url": "https://github.com/ToniRib/game_time/issues"
   },
-  "homepage": "https://github.com/turingschool-examples/game-time-starter-kit",
+  "homepage": "https://github.com/ToniRib/game_time",
   "devDependencies": {
     "babel": "^5.8.3",
     "babel-core": "^5.7.4",
