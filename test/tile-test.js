@@ -27,4 +27,10 @@ describe('tile attributes', function() {
     let tile = new Tile({ x: 1, y: 2 });
     assert.equal(tile.height, 50);
   });
+
+  it('has can return center', function() {
+    let tile = new Tile({ x: 0, y: 0 });
+    assert.equal(tile.centerX(), 25);
+    assert.equal(tile.centerY(), 25);
+  });
 });
