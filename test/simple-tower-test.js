@@ -44,8 +44,10 @@ describe('shoot functionality', function() {
 
   it('updates the time since the last shot if it shoots', function() {
     let tower = new SimpleTower({x: 1, y: 2});
+    let enemy1 = new SimpleEnemy({x: 5, y: 2});
+    let enemy2 = new SimpleEnemy({x: -2, y: 2});
     let firstShot = tower.timeSinceLastShot;
-    tower.shoot();
+    tower.shoot([enemy1, enemy2]);
     let lastShot = tower.timeSinceLastShot;
     assert.notEqual(firstShot, lastShot, "Tower did not shoot");
   });
@@ -87,6 +89,25 @@ describe('shoot functionality', function() {
       assert.equal(enemiesInRange.length, 2);
       assert.equal(enemiesInRange[0], enemy1);
       assert.equal(enemiesInRange[1], enemy2);
+    });
+
+    it('selects first enemy in range', function() {
+      let tower = new SimpleTower({x: 1, y: 2});
+      let enemy1 = new SimpleEnemy({x: 5, y: 2});
+      let enemy2 = new SimpleEnemy({x: -2, y: 2});
+      let enemy3 = new SimpleEnemy({x: 15, y: 2});
+
+      let enemySelected = tower.selectEnemyToShoot([enemy1, enemy2, enemy3]);
+      assert.equal(enemySelected, enemy1);
+    });
+
+    it('does damage to an enemy when it shoots', function() {
+      let tower = new SimpleTower({x: 1, y: 2});
+      let enemy1 = new SimpleEnemy({x: 5, y: 2});
+
+      tower.shoot([enemy1]);
+
+      assert.equal(enemy1.health, 90);
     });
   });
 });

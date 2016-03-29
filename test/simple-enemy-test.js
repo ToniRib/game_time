@@ -26,3 +26,11 @@ describe('enemy attributes', function() {
     assert.typeOf(enemy.health, 'number');
   });
 });
+
+describe('takes damage from a tower', function() {
+  it('its health decreases by a given amount', function() {
+    let enemy = new SimpleEnemy({x: 1, y: 2});
+    enemy.hit(20);
+    assert.equal(enemy.health, 80);
+  });
+});
