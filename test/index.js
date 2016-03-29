@@ -1,3 +1,4 @@
+require('./board-test.js');
 require('./path-tile-test.js');
 require('./tile-test.js');
 require('./build-tile-test.js');
