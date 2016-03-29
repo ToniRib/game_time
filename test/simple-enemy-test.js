@@ -33,4 +33,10 @@ describe('takes damage from a tower', function() {
     enemy.hit(20);
     assert.equal(enemy.health, 80);
   });
+
+  it('it dies if health dips to 0', function() {
+    let enemy = new SimpleEnemy({x: 1, y: 2});
+    enemy.hit(110);
+    assert.isNotTrue(enemy.alive);
+  });
 });
