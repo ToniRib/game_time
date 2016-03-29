@@ -75,5 +75,18 @@ describe('shoot functionality', function() {
       let enemy = new SimpleEnemy({x: 100, y: 100});
       assert.isNotTrue(tower.inRange(enemy));
     });
+
+    it('returns a list of enemies within the tower range', function() {
+      let tower = new SimpleTower({x: 1, y: 2});
+      let enemy1 = new SimpleEnemy({x: 5, y: 2});
+      let enemy2 = new SimpleEnemy({x: -2, y: 2});
+      let enemy3 = new SimpleEnemy({x: 15, y: 2});
+
+      let enemiesInRange = tower.enemiesWithinRange([enemy1, enemy2, enemy3]);
+
+      assert.equal(enemiesInRange.length, 2);
+      assert.equal(enemiesInRange[0], enemy1);
+      assert.equal(enemiesInRange[1], enemy2);
+    });
   });
 });
