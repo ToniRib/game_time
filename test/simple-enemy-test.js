@@ -25,6 +25,11 @@ describe('enemy attributes', function() {
     let enemy = new SimpleEnemy({x: 1, y: 2});
     assert.typeOf(enemy.health, 'number');
   });
+
+  it('currentDirection is right by default', function() {
+    let enemy = new SimpleEnemy({x: 1, y: 2});
+    assert.equal(enemy.currentDirection, 'right');
+  });
 });
 
 describe('takes damage from a tower', function() {
@@ -38,5 +43,35 @@ describe('takes damage from a tower', function() {
     let enemy = new SimpleEnemy({x: 1, y: 2});
     enemy.hit(110);
     assert.isNotTrue(enemy.alive);
+  });
+});
+
+describe('enemy movement', function() {
+  it('moves right by value of speed if currentDirection is right', function() {
+    let enemy = new SimpleEnemy({x: 0, y: 0});
+    enemy.move();
+
+    assert.equal(enemy.x, 1);
+  });
+
+  it('moves left by value of speed if currentDirection is left', function() {
+    let enemy = new SimpleEnemy({x: 1, y: 0});
+    enemy.setDirection('left').move();
+
+    assert.equal(enemy.x, 0);
+  });
+
+  it('moves up by value of speed if currentDirection is up', function() {
+    let enemy = new SimpleEnemy({x: 0, y: 1});
+    enemy.setDirection('up').move();
+
+    assert.equal(enemy.y, 0);
+  });
+
+  it('moves up by value of speed if currentDirection is down', function() {
+    let enemy = new SimpleEnemy({x: 0, y: 0});
+    enemy.setDirection('down').move();
+
+    assert.equal(enemy.y, 1);
   });
 });
