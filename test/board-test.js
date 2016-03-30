@@ -45,3 +45,45 @@ describe('can build a board', function(){
     assert.equal(board.tiles[32].vacant, true);
   });
 });
+
+describe('board is clicked on', function() {
+  it('returns the tile that was clicked', function() {
+    let board = new Board({});
+    let clickedTile = board.getClickedTile(25, 25);
+    let firstTile = board.tiles[0];
+
+    assert.equal(firstTile, clickedTile);
+  });
+
+  it('returns the correct tile for left edge case', function() {
+    let board = new Board({});
+    let clickedTile = board.getClickedTile(50, 25);
+    let secondTile = board.tiles[1];
+
+    assert.equal(secondTile, clickedTile);
+  });
+
+  it('returns the correct tile for just left of left edge case', function() {
+    let board = new Board({});
+    let clickedTile = board.getClickedTile(49, 25);
+    let firstTile = board.tiles[0];
+
+    assert.equal(firstTile, clickedTile);
+  });
+
+  it('returns the correct tile for lower edge case', function() {
+    let board = new Board({});
+    let clickedTile = board.getClickedTile(25, 50);
+    let secondTile = board.tiles[16];
+
+    assert.equal(secondTile, clickedTile);
+  });
+
+  it('returns the correct tile for just above of lower edge case', function() {
+    let board = new Board({});
+    let clickedTile = board.getClickedTile(25, 49);
+    let firstTile = board.tiles[0];
+
+    assert.equal(firstTile, clickedTile);
+  });
+});
