@@ -87,3 +87,13 @@ describe('board is clicked on', function() {
     assert.equal(firstTile, clickedTile);
   });
 });
+
+describe('board has knowledge of turn tiles', function() {
+  it('returns a list of path tiles that are turn points', function() {
+    let board = new Board({15: {type: 'path', isTurn: true, direction: 'up'}, 32: {type:'path', isTurn: true, direction: 'right'}});
+
+    let turnTiles = board.turnTiles();
+
+    assert.equal(turnTiles.length, 2);
+  });
+});
