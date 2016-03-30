@@ -1,6 +1,16 @@
 var assert = require('chai').assert;
-const game = require('../lib/game.js');
+const Game = require('../lib/game');
 
-it('game is a function', function (){
-  assert.typeOf(game, 'function');
+describe('game initialization', function() {
+  it('creates board from level options', function() {
+    let game = new Game();
+    let gameBoard = game.board;
+
+    assert.typeOf(gameBoard, 'object');
+    for (var i = 64; i < 80; i++) {
+      assert.equal(gameBoard.tiles[i].constructor.name, 'PathTile');
+    }
+    assert.equal(gameBoard.tiles[51].constructor.name, 'BuildTile');
+    assert.equal(gameBoard.tiles[89].constructor.name, 'BuildTile');
+  });
 });
