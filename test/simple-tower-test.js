@@ -62,24 +62,28 @@ describe('shoot functionality', function() {
   describe('range functionality', function(){
     it('enemy is in range', function(){
       let tower = new SimpleTower({x: 1, y: 2});
+      tower.range = 4;
       let enemy = new SimpleEnemy({x: 2, y: 2});
       assert(tower.inRange(enemy));
     });
 
     it('enemy is in range at edge of range', function(){
       let tower = new SimpleTower({x: 1, y: 2});
+      tower.range = 4;
       let enemy = new SimpleEnemy({x: 5, y: 2});
       assert(tower.inRange(enemy));
     });
 
     it('enemy is not in range', function(){
       let tower = new SimpleTower({x: 1, y: 2});
+      tower.range = 4;
       let enemy = new SimpleEnemy({x: 100, y: 100});
       assert.isNotTrue(tower.inRange(enemy));
     });
 
     it('returns a list of enemies within the tower range', function() {
       let tower = new SimpleTower({x: 1, y: 2});
+      tower.range = 4;
       let enemy1 = new SimpleEnemy({x: 5, y: 2});
       let enemy2 = new SimpleEnemy({x: -2, y: 2});
       let enemy3 = new SimpleEnemy({x: 15, y: 2});
@@ -93,6 +97,7 @@ describe('shoot functionality', function() {
 
     it('selects first enemy in range', function() {
       let tower = new SimpleTower({x: 1, y: 2});
+      tower.range = 4;
       let enemy1 = new SimpleEnemy({x: 5, y: 2});
       let enemy2 = new SimpleEnemy({x: -2, y: 2});
       let enemy3 = new SimpleEnemy({x: 15, y: 2});
@@ -103,6 +108,8 @@ describe('shoot functionality', function() {
 
     it('does damage to an enemy when it shoots', function() {
       let tower = new SimpleTower({x: 1, y: 2});
+      tower.range = 4;
+      tower.damage = 10;
       let enemy1 = new SimpleEnemy({x: 5, y: 2});
 
       tower.shoot([enemy1]);

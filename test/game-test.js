@@ -21,7 +21,7 @@ describe('game initialization', function() {
     assert.equal(gameEnemies[0].constructor.name, 'SimpleEnemy');
     assert.equal(gameEnemies.length, 3);
   });
-  
+
   //
   // it('finds turn tiles from board', function() {
   //   let game = new Game();
@@ -30,4 +30,43 @@ describe('game initialization', function() {
   //   assert.equal(gameBoard.tiles[51].constructor.name, 'BuildTile');
   //   assert.equal(gameBoard.tiles[89].constructor.name, 'BuildTile');
   // });
+});
+
+describe('enemy logic', function(){
+  it('returns all alive enemies', function(){
+    let game = new Game();
+    let initialEnemiesCount = game.enemies.length;
+    game.enemies[0].alive = false;
+    let gameEnemies = game.retrieveAliveEnemies();
+
+    assert.equal(gameEnemies.length, initialEnemiesCount - 1);
+  });
+
+  it('returns enemies on board', function(){
+    let game = new Game();
+    game.enemies[0].x = 100;
+    let gameEnemies = game.retrieveAliveEnemiesOnBoard();
+
+    assert.equal(gameEnemies.length, 1);
+  });
+});
+
+describe('tower logic', function(){
+  it('returns all tiles with towers', function(){
+    let game = new Game();
+    game.board.tiles[51].addTower('simple');
+    let towerTiles = game.getTowerTiles();
+
+    assert.equal(towerTiles.length, 1);
+    assert.equal(towerTiles[0].constructor.name, 'BuildTile');
+  });
+
+  it('returns all towers active in game', function(){
+    let game = new Game();
+    game.board.tiles[51].addTower('simple');
+    let towers = game.getTowers();
+
+    assert.equal(towers.length, 1);
+    assert.equal(towers[0].constructor.name, 'SimpleTower');
+  });
 });
