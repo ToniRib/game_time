@@ -13,4 +13,21 @@ describe('game initialization', function() {
     assert.equal(gameBoard.tiles[51].constructor.name, 'BuildTile');
     assert.equal(gameBoard.tiles[89].constructor.name, 'BuildTile');
   });
+
+  it('creates enemies when instantiated', function() {
+    let game = new Game();
+    let gameEnemies = game.enemies;
+
+    assert.equal(gameEnemies[0].constructor.name, 'SimpleEnemy');
+    assert.equal(gameEnemies.length, 3);
+  });
+  
+  //
+  // it('finds turn tiles from board', function() {
+  //   let game = new Game();
+  //   let gameBoard = game.board;
+  //
+  //   assert.equal(gameBoard.tiles[51].constructor.name, 'BuildTile');
+  //   assert.equal(gameBoard.tiles[89].constructor.name, 'BuildTile');
+  // });
 });
