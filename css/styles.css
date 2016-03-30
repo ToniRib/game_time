@@ -1,0 +1,21 @@
+h1 {
+  color: blue;
+  text-align: center;
+}
+
+.canvas-container {
+  width: 100%;
+  text-align: center;
+}
+
+.menu-container {
+  width: 800px;
+  height: 100px;
+  background-color: black;
+  margin: 0 auto;
+}
+
+canvas {
+  margin: 0 auto;
+  display: inline-block;
+}
