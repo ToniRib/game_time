@@ -49,6 +49,26 @@ describe('enemy logic', function(){
 
     assert.equal(gameEnemies.length, 1);
   });
+
+  it('removes enemies who go off right side of board', function() {
+    let game = new Game();
+    let initialEnemiesCount = game.enemies.length;
+
+    game.enemies[0].x = 801;
+    game.removeEnemiesOffRight();
+
+    assert.equal(game.enemies.length, initialEnemiesCount - 1);
+  });
+
+  it('decreases lives by one if enemy goes off right side of board', function() {
+    let game = new Game();
+    let initialLives = game.lives;
+
+    game.enemies[0].x = 801;
+    game.removeEnemiesOffRight();
+
+    assert.equal(game.lives, initialLives - 1);
+  });
 });
 
 describe('tower logic', function(){
