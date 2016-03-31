@@ -94,8 +94,9 @@ describe('game enemy logic', function(){
     assert.equal(game.monies, 100);
 
     game.enemies[0].x = 900;
-    game.retrieveAliveEnemies();
+    game.removeEnemiesOffRight();
     game.rewardMonies();
+    game.retrieveAliveEnemies();
 
     assert.equal(game.monies, 100);
   });
