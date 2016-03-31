@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Game Time</title>
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-  <div>
-    <!-- <h1>Super Happy Animal Fruit Time!</h1> -->
-  </div>
-  <div class="canvas-container">
-    <canvas id="game-canvas" width="800" height="500"></canvas>
-  </div>
-  <div class="menu-container">
-    <div class="tower-button" id="simple-tower">
-      <img src="/sprites/super-tower-2.png">
-      <p>MeowTower</p>
+  <head>
+    <meta charset="utf-8">
+    <title>Game Time</title>
+    <link href='https://fonts.googleapis.com/css?family=Bangers' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/styles.css">
+  </head>
+  <body>
+    <div>
+      <h1>Super Happy Animal Food Time!</h1>
     </div>
-    <div class="tower-button" id="flash-tower">
-      <img src="/sprites/whale-tower.gif">
-      <p>WhaleTower</p>
+    <div class="canvas-container">
+      <canvas id="game-canvas" width="800" height="500"></canvas>
     </div>
-  </div>
-  <script src="main.bundle.js"></script>
-</body>
+    <div class="menu-container">
+      <div class="tower-button" id="simple-tower">
+        <img class="tower-image" src="/sprites/super-tower-2.png">
+        <p>Meow<br>Tower</p>
+      </div>
+      <div class="tower-button" id="flash-tower">
+        <img class="tower-image" src="/sprites/whale-tower.gif">
+        <p>Whale<br>Tower</p>
+      </div>
+      <div class="start-button" id="start-button">
+        <button type="button" id="start">Start</button>
+      </div>
+      <div class="lives-left" id="lives-container">
+        <p>Lives<br><span id="number-of-lives"></span></p>
+      </div>
+    </div>
+    <script src="main.bundle.js"></script>
+  </body>
 </html>
