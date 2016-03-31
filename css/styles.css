@@ -71,6 +71,20 @@ canvas {
   width: 90px;
 }
 
+.start-button {
+  right: 105px;
+  position: absolute;
+  text-align: center;
+  top: 5px;
+}
+
+.start-button button {
+  height: 30px;
+  width: 80px;
+  cursor: hand;
+  cursor: pointer;
+}
+
 #number-of-lives {
   font-size: 50px;
 }
