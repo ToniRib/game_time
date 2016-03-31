@@ -73,12 +73,14 @@ describe('game enemy logic', function(){
     assert.equal(game.monies, 100);
     assert.equal(game.enemies[0].price, 20);
 
+    game.enemies[0].active = true;
     game.enemies[0].alive = false;
     game.retrieveAliveEnemies();
     game.rewardMonies();
 
     assert.equal(game.monies, 120);
 
+    game.enemies[0].active = true;
     game.enemies[1].alive = false;
     game.retrieveAliveEnemies();
     game.rewardMonies();
