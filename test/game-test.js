@@ -19,7 +19,7 @@ describe('game initialization', function() {
     let gameEnemies = game.enemies;
 
     assert.equal(gameEnemies[0].constructor.name, 'SimpleEnemy');
-    assert.equal(gameEnemies.length, 3);
+    assert.equal(gameEnemies.length, 6);
   });
 
   //
