@@ -86,6 +86,19 @@ describe('game enemy logic', function(){
 
     assert.equal(game.monies, 140);
   });
+
+  it('does not gain money for an enemy who makes it off the board', function() {
+    let game = new Game();
+    game.board = new Board(boardOne);
+
+    assert.equal(game.monies, 100);
+
+    game.enemies[0].x = 900;
+    game.retrieveAliveEnemies();
+    game.rewardMonies();
+
+    assert.equal(game.monies, 100);
+  });
 });
 
 describe('game tower logic', function(){
