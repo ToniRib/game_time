@@ -1,26 +1,21 @@
 var assert = require('chai').assert;
 const Game = require('../lib/game');
-const boardOne = require('../lib/test-board-one');
-const boardTwo = require('../lib/test-board-two');
-const Board = require('../lib/board');
 
 describe('game initialization', function() {
   it('creates board from level options', function() {
     let game = new Game();
-    game.board = new Board(boardOne);
+    game.updateLevel('test', 1);
     let gameBoard = game.board;
 
-
     assert.typeOf(gameBoard, 'object');
-    for (var i = 64; i < 80; i++) {
-      assert.equal(gameBoard.tiles[i].constructor.name, 'PathTile');
-    }
-    assert.equal(gameBoard.tiles[51].constructor.name, 'BuildTile');
-    assert.equal(gameBoard.tiles[89].constructor.name, 'BuildTile');
+    assert.equal(gameBoard.tiles[98].constructor.name, 'PathTile');
+    assert.equal(gameBoard.tiles[82].constructor.name, 'BuildTile');
+    assert.equal(gameBoard.tiles[7].constructor.name, 'Tile');
   });
 
   it('creates enemies when instantiated', function() {
     let game = new Game();
+    game.updateLevel('test', 1);
     let gameEnemies = game.enemies;
 
     assert.equal(gameEnemies[0].constructor.name, 'SimpleEnemy');
@@ -31,6 +26,7 @@ describe('game initialization', function() {
 describe('game enemy logic', function(){
   it('returns all alive enemies', function(){
     let game = new Game();
+    game.updateLevel('test', 1);
     let initialEnemiesCount = game.enemies.length;
     game.enemies[0].alive = false;
     let gameEnemies = game.retrieveAliveEnemies();
@@ -40,7 +36,8 @@ describe('game enemy logic', function(){
 
   it('returns enemies on board', function(){
     let game = new Game();
-    game.enemies[0].x = 100;
+    game.updateLevel('test', 1);
+    game.enemies[2].x = 100;
     let gameEnemies = game.retrieveAliveEnemiesOnBoard();
 
     assert.equal(gameEnemies.length, 1);
@@ -48,6 +45,7 @@ describe('game enemy logic', function(){
 
   it('removes enemies who go off right side of board', function() {
     let game = new Game();
+    game.updateLevel('test', 1);
     let initialEnemiesCount = game.enemies.length;
 
     game.enemies[0].x = 801;
@@ -59,6 +57,7 @@ describe('game enemy logic', function(){
 
   it('decreases lives by one if enemy goes off right side of board', function() {
     let game = new Game();
+    game.updateLevel('test', 1);
     let initialLives = game.lives;
 
     game.enemies[0].x = 801;
@@ -69,7 +68,7 @@ describe('game enemy logic', function(){
 
   it('gains money for each dead enemy', function() {
     let game = new Game();
-    game.board = new Board(boardOne);
+    game.updateLevel('test', 1);
 
     assert.equal(game.monies, 100);
     assert.equal(game.enemies[0].price, 20);
@@ -89,13 +88,14 @@ describe('game enemy logic', function(){
 
   it('does not gain money for an enemy who makes it off the board', function() {
     let game = new Game();
-    game.board = new Board(boardOne);
+    game.updateLevel('test', 1);
 
     assert.equal(game.monies, 100);
 
     game.enemies[0].x = 900;
-    game.retrieveAliveEnemies();
+    game.removeEnemiesOffRight();
     game.rewardMonies();
+    game.retrieveAliveEnemies();
 
     assert.equal(game.monies, 100);
   });
@@ -104,9 +104,9 @@ describe('game enemy logic', function(){
 describe('game tower logic', function(){
   it('returns all tiles with towers', function(){
     let game = new Game();
-    game.board = new Board(boardOne);
+    game.updateLevel('test', 1);
 
-    game.board.tiles[51].addTower('simple');
+    game.board.tiles[82].addTower('simple');
     let towerTiles = game.getTowerTiles();
 
     assert.equal(towerTiles.length, 1);
@@ -115,8 +115,8 @@ describe('game tower logic', function(){
 
   it('returns all towers active in game', function(){
     let game = new Game();
-    game.board = new Board(boardOne);
-    game.board.tiles[51].addTower('simple');
+    game.updateLevel('test', 1);
+    game.board.tiles[82].addTower('simple');
     let towers = game.getTowers();
 
     assert.equal(towers.length, 1);
@@ -127,6 +127,7 @@ describe('game tower logic', function(){
 describe('game outcome logic', function(){
   it('game can be won', function(){
     let game = new Game();
+    game.updateLevel('test', 1);
     game.enemies = [];
 
     assert.equal(game.checkStatus(), 'win');
@@ -134,6 +135,7 @@ describe('game outcome logic', function(){
 
   it('game can be lost', function(){
     let game = new Game();
+    game.updateLevel('test', 1);
     game.lives = 0;
 
     assert.equal(game.checkStatus(), 'lose');
@@ -141,6 +143,7 @@ describe('game outcome logic', function(){
 
   it('game continues', function(){
     let game = new Game();
+    game.updateLevel('test', 1);
     game.lives = 1;
 
     assert.equal(game.checkStatus(), 'ongoing');
@@ -148,10 +151,9 @@ describe('game outcome logic', function(){
 });
 
 describe('game turn logic', function(){
-
   it('enemy changes direction at turn tile', function(){
     let game = new Game();
-    game.board = new Board(boardTwo);
+    game.updateLevel('test', 1);
 
     let downTurnTile = game.board.getTurnTiles()[1];
     let enemyOneCurrentDirection = game.enemies[0].currentDirection;
@@ -164,19 +166,4 @@ describe('game turn logic', function(){
 
     assert.notEqual(enemyOneCurrentDirection, enemyOneNewDirection);
   });
-
-  it('enemy is recentered at turn tile', function(){
-    let game = new Game();
-    game.board = new Board(boardTwo);
-
-    let downTurnTile = game.board.getTurnTiles()[1];
-    game.enemies[0].x = downTurnTile.x + 3;
-    game.enemies[0].y = downTurnTile.y - 2;
-
-    game.redirectEnemies();
-
-    assert.equal(downTurnTile.x, game.enemies[0].x);
-    assert.equal(downTurnTile.y, game.enemies[0].y);
-  });
-
 });
