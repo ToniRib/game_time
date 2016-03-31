@@ -14,6 +14,10 @@ p {
   margin: 1px 0;
 }
 
+.tower-text {
+  font-size: 14px;
+}
+
 .canvas-container {
   width: 100%;
   text-align: center;
@@ -71,8 +75,19 @@ canvas {
   width: 90px;
 }
 
-.start-button {
+.monies {
+  background-color: #adff74;
+  border-radius: 7px;
+  height: 90px;
   right: 105px;
+  position: absolute;
+  text-align: center;
+  top: 5px;
+  width: 90px;
+}
+
+.start-button {
+  right: 205px;
   position: absolute;
   text-align: center;
   top: 5px;
@@ -87,4 +102,8 @@ canvas {
 
 #number-of-lives {
   font-size: 50px;
+}
+
+#money-amount {
+  font-size: 30px;
 }

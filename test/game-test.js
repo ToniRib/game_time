@@ -52,6 +52,7 @@ describe('game enemy logic', function(){
 
     game.enemies[0].x = 801;
     game.removeEnemiesOffRight();
+    game.retrieveAliveEnemies();
 
     assert.equal(game.enemies.length, initialEnemiesCount - 1);
   });
@@ -64,6 +65,39 @@ describe('game enemy logic', function(){
     game.removeEnemiesOffRight();
 
     assert.equal(game.lives, initialLives - 1);
+  });
+
+  it('gains money for each dead enemy', function() {
+    let game = new Game();
+    game.board = new Board(boardOne);
+
+    assert.equal(game.monies, 100);
+    assert.equal(game.enemies[0].price, 20);
+
+    game.enemies[0].alive = false;
+    game.retrieveAliveEnemies();
+    game.rewardMonies();
+
+    assert.equal(game.monies, 120);
+
+    game.enemies[1].alive = false;
+    game.retrieveAliveEnemies();
+    game.rewardMonies();
+
+    assert.equal(game.monies, 140);
+  });
+
+  it('does not gain money for an enemy who makes it off the board', function() {
+    let game = new Game();
+    game.board = new Board(boardOne);
+
+    assert.equal(game.monies, 100);
+
+    game.enemies[0].x = 900;
+    game.retrieveAliveEnemies();
+    game.rewardMonies();
+
+    assert.equal(game.monies, 100);
   });
 });
 
