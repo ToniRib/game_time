@@ -1,10 +1,15 @@
 var assert = require('chai').assert;
 const Game = require('../lib/game');
+const boardOne = require('../lib/test-board-one');
+const boardTwo = require('../lib/test-board-two');
+const Board = require('../lib/board');
 
 describe('game initialization', function() {
   it('creates board from level options', function() {
     let game = new Game();
+    game.board = new Board(boardOne);
     let gameBoard = game.board;
+
 
     assert.typeOf(gameBoard, 'object');
     for (var i = 64; i < 80; i++) {
@@ -21,18 +26,9 @@ describe('game initialization', function() {
     assert.equal(gameEnemies[0].constructor.name, 'SimpleEnemy');
     assert.equal(gameEnemies.length, 6);
   });
-
-  //
-  // it('finds turn tiles from board', function() {
-  //   let game = new Game();
-  //   let gameBoard = game.board;
-  //
-  //   assert.equal(gameBoard.tiles[51].constructor.name, 'BuildTile');
-  //   assert.equal(gameBoard.tiles[89].constructor.name, 'BuildTile');
-  // });
 });
 
-describe('enemy logic', function(){
+describe('game enemy logic', function(){
   it('returns all alive enemies', function(){
     let game = new Game();
     let initialEnemiesCount = game.enemies.length;
@@ -71,9 +67,11 @@ describe('enemy logic', function(){
   });
 });
 
-describe('tower logic', function(){
+describe('game tower logic', function(){
   it('returns all tiles with towers', function(){
     let game = new Game();
+    game.board = new Board(boardOne);
+
     game.board.tiles[51].addTower('simple');
     let towerTiles = game.getTowerTiles();
 
@@ -83,6 +81,7 @@ describe('tower logic', function(){
 
   it('returns all towers active in game', function(){
     let game = new Game();
+    game.board = new Board(boardOne);
     game.board.tiles[51].addTower('simple');
     let towers = game.getTowers();
 
@@ -112,4 +111,38 @@ describe('game outcome logic', function(){
 
     assert.equal(game.checkStatus(), 'ongoing');
   });
+});
+
+describe('game turn logic', function(){
+
+  it('enemy changes direction at turn tile', function(){
+    let game = new Game();
+    game.board = new Board(boardTwo);
+
+    let downTurnTile = game.board.getTurnTiles()[1];
+    let enemyOneCurrentDirection = game.enemies[0].currentDirection;
+    game.enemies[0].x = downTurnTile.x;
+    game.enemies[0].y = downTurnTile.y;
+
+    game.redirectEnemies();
+
+    let enemyOneNewDirection = game.enemies[0].currentDirection;
+
+    assert.notEqual(enemyOneCurrentDirection, enemyOneNewDirection);
+  });
+
+  it('enemy is recentered at turn tile', function(){
+    let game = new Game();
+    game.board = new Board(boardTwo);
+
+    let downTurnTile = game.board.getTurnTiles()[1];
+    game.enemies[0].x = downTurnTile.x + 3;
+    game.enemies[0].y = downTurnTile.y - 2;
+
+    game.redirectEnemies();
+
+    assert.equal(downTurnTile.x, game.enemies[0].x);
+    assert.equal(downTurnTile.y, game.enemies[0].y);
+  });
+
 });
