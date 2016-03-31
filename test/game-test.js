@@ -21,15 +21,6 @@ describe('game initialization', function() {
     assert.equal(gameEnemies[0].constructor.name, 'SimpleEnemy');
     assert.equal(gameEnemies.length, 6);
   });
-
-  //
-  // it('finds turn tiles from board', function() {
-  //   let game = new Game();
-  //   let gameBoard = game.board;
-  //
-  //   assert.equal(gameBoard.tiles[51].constructor.name, 'BuildTile');
-  //   assert.equal(gameBoard.tiles[89].constructor.name, 'BuildTile');
-  // });
 });
 
 describe('enemy logic', function(){
@@ -112,4 +103,28 @@ describe('game outcome logic', function(){
 
     assert.equal(game.checkStatus(), 'ongoing');
   });
+});
+
+describe('game turn logic', function(){
+  //
+  // it('', function(){
+  //   let game = new Game();
+  //   game.enemies = [];
+  //
+  //   assert.equal(game.checkStatus(), 'win');
+  // });
+
+  // it('game can be lost', function(){
+  //   let game = new Game();
+  //   game.lives = 0;
+  //
+  //   assert.equal(game.checkStatus(), 'lose');
+  // });
+  //
+  // it('game continues', function(){
+  //   let game = new Game();
+  //   game.lives = 1;
+  //
+  //   assert.equal(game.checkStatus(), 'ongoing');
+  // });
 });
