@@ -23,12 +23,24 @@ canvas {
   cursor: hand;
 }
 
-.tower-button {
+#simple-tower {
   width: 90px;
   height: 90px;
   position: absolute;
   top: 5px;
   left: 5px;
+  background-color: white;
+  text-align: center;
+  cursor: pointer;
+  cursor: hand;
+}
+
+#flash-tower {
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  top: 5px;
+  left: 100px;
   background-color: white;
   text-align: center;
   cursor: pointer;
