@@ -1,36 +1,53 @@
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
 h1 {
-  color: blue;
+  color: #0482b8;
+  font-family: 'Bangers', cursive;
+  font-size: 36px;
+  letter-spacing: 0.3em;
   text-align: center;
+}
+
+p {
+  margin-top: 1px;
 }
 
 .canvas-container {
   width: 100%;
-  /*text-align: center;*/
+  text-align: center;
 }
 
 .menu-container {
-  width: 800px;
+  background-color: #9ddaf4;
+  border: 2px solid #0482b8;
   height: 100px;
-  background-color: black;
+  margin: 0 auto;
   position: relative;
-  /*margin: 0 auto;*/
+  width: 800px;
 }
 
 canvas {
-  /*margin: 0 auto;*/
   display: inline-block;
-  cursor: pointer;
   cursor: hand;
+  cursor: pointer;
+  margin: 0 auto;
 }
 
 .tower-button {
-  width: 90px;
-  height: 90px;
-  position: absolute;
-  top: 5px;
-  left: 5px;
   background-color: white;
-  text-align: center;
-  cursor: pointer;
+  border-radius: 7px;
   cursor: hand;
+  cursor: pointer;
+  height: 90px;
+  left: 5px;
+  position: absolute;
+  text-align: center;
+  top: 5px;
+  width: 90px;
+}
+
+.tower-image {
+  margin-top: 5px;
 }
