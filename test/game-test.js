@@ -90,3 +90,26 @@ describe('tower logic', function(){
     assert.equal(towers[0].constructor.name, 'SimpleTower');
   });
 });
+
+describe('game outcome logic', function(){
+  it('game can be won', function(){
+    let game = new Game();
+    game.enemies = [];
+
+    assert.equal(game.checkStatus(), 'win');
+  });
+
+  it('game can be lost', function(){
+    let game = new Game();
+    game.lives = 0;
+
+    assert.equal(game.checkStatus(), 'lose');
+  });
+
+  it('game continues', function(){
+    let game = new Game();
+    game.lives = 1;
+
+    assert.equal(game.checkStatus(), 'ongoing');
+  });
+});
