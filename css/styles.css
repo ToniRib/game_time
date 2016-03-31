@@ -5,17 +5,32 @@ h1 {
 
 .canvas-container {
   width: 100%;
-  text-align: center;
+  /*text-align: center;*/
 }
 
 .menu-container {
   width: 800px;
   height: 100px;
   background-color: black;
-  margin: 0 auto;
+  position: relative;
+  /*margin: 0 auto;*/
 }
 
 canvas {
-  margin: 0 auto;
+  /*margin: 0 auto;*/
   display: inline-block;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.tower-button {
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-color: white;
+  text-align: center;
+  cursor: pointer;
+  cursor: hand;
 }
