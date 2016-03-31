@@ -11,7 +11,7 @@ h1 {
 }
 
 p {
-  margin-top: 1px;
+  margin: 1px 0;
 }
 
 .canvas-container {
@@ -50,4 +50,19 @@ canvas {
 
 .tower-image {
   margin-top: 5px;
+}
+
+.lives-left {
+  background-color: #adff74;
+  border-radius: 7px;
+  height: 90px;
+  right: 5px;
+  position: absolute;
+  text-align: center;
+  top: 5px;
+  width: 90px;
+}
+
+#number-of-lives {
+  font-size: 50px;
 }
