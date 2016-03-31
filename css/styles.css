@@ -14,6 +14,10 @@ p {
   margin: 1px 0;
 }
 
+.tower-text {
+  font-size: 14px;
+}
+
 .canvas-container {
   width: 100%;
   text-align: center;
