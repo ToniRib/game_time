@@ -1,13 +1,11 @@
 var assert = require('chai').assert;
 const Game = require('../lib/game');
-const boardOne = require('../lib/test-board-one');
-const boardTwo = require('../lib/test-board-two');
+const Level = require('../lib/levels/level');
 const Board = require('../lib/board');
 
 describe('game initialization', function() {
   it('creates board from level options', function() {
     let game = new Game();
-    game.board = new Board(boardOne);
     let gameBoard = game.board;
 
 
@@ -24,7 +22,7 @@ describe('game initialization', function() {
     let gameEnemies = game.enemies;
 
     assert.equal(gameEnemies[0].constructor.name, 'SimpleEnemy');
-    assert.equal(gameEnemies.length, 6);
+    assert.equal(gameEnemies.length, 3);
   });
 });
 
@@ -40,7 +38,8 @@ describe('game enemy logic', function(){
 
   it('returns enemies on board', function(){
     let game = new Game();
-    game.enemies[0].x = 100;
+    game.enemies[2].x = 100;
+    console.log(game.enemies)
     let gameEnemies = game.retrieveAliveEnemiesOnBoard();
 
     assert.equal(gameEnemies.length, 1);
@@ -69,7 +68,6 @@ describe('game enemy logic', function(){
 
   it('gains money for each dead enemy', function() {
     let game = new Game();
-    game.board = new Board(boardOne);
 
     assert.equal(game.monies, 100);
     assert.equal(game.enemies[0].price, 20);
