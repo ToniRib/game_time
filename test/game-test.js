@@ -1,5 +1,6 @@
 var assert = require('chai').assert;
 const Game = require('../lib/game');
+const SimpleTower = require('../lib/simple-tower');
 
 describe('game initialization', function() {
   it('creates board from level options', function() {
@@ -118,11 +119,14 @@ describe('game tower logic', function(){
   it('returns all towers active in game', function(){
     let game = new Game();
     game.updateLevel('test', 1);
-    game.board.tiles[82].addTower('simple');
+
+    let buildTile = game.board.tiles[82];
+    let simpleTower = new SimpleTower({ x: buildTile.centerX(), y: buildTile.centerY() });
+
+    buildTile.addTower(simpleTower);
     let towers = game.getTowers();
 
     assert.equal(towers.length, 1);
-    assert.equal(towers[0].constructor.name, 'SimpleTower');
   });
 });
 
