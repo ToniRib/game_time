@@ -1,4 +1,12 @@
-# Game Time Starter Kit
+# Super Happy Animal Food Time!
+
+A JavaScript Tower Defense Game brought to you by [Toni Rib](https://github.com/ToniRib) and [Jordan Lawler](https://github.com/Jlawlzz).
+
+## Overview
+
+Can you defeat the food in each level by building animal towers?
+
+## Setup, Installation, and Tests
 
 To install the dependencies:
 
@@ -22,7 +30,6 @@ To build the static files:
 ```js
 npm run build
 ```
-
 
 To run tests in Node:
 
