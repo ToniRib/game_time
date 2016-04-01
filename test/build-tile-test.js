@@ -1,5 +1,6 @@
 var assert = require('chai').assert;
-const BuildTile = require('../lib/build-tile.js');
+const BuildTile = require('../lib/build-tile');
+const SimpleTower = require('../lib/simple-tower');
 
 it('BuildTile is a function', function (){
   assert.typeOf(BuildTile, 'function');
@@ -37,7 +38,8 @@ describe('buildTile attributes', function() {
 describe('adds a tower to site', function() {
   it('can add a tower if vacant and a build site', function() {
     let buildTile = new BuildTile({ x: 0, y: 0 });
-    buildTile.addTower('simple');
+    let simpleTower = new SimpleTower({ x: buildTile.centerX(), y: buildTile.centerY() });
+    buildTile.addTower(simpleTower);
     assert.typeOf(buildTile.tower, 'object');
   });
 
@@ -45,13 +47,15 @@ describe('adds a tower to site', function() {
     let buildTile = new BuildTile({ x: 0, y: 0 });
     buildTile.vacant = false;
     buildTile.tower = 'fakeTower';
-    buildTile.addTower('simple');
+    let simpleTower = new SimpleTower({ x: buildTile.centerX(), y: buildTile.centerY() });
+    buildTile.addTower(simpleTower);
     assert.typeOf(buildTile.tower, 'string');
   });
 
   it('has correct origin point', function() {
     let buildTile = new BuildTile({ x: 50, y: 50 });
-    buildTile.addTower('simple');
+    let simpleTower = new SimpleTower({ x: buildTile.centerX(), y: buildTile.centerY() });
+    buildTile.addTower(simpleTower);
     assert.equal(buildTile.tower.y, 75);
     assert.equal(buildTile.tower.x, 75);
   });
