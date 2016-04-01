@@ -40,10 +40,7 @@ canvas {
 }
 
 .tower-button {
-  background-color: white;
   border-radius: 7px;
-  cursor: hand;
-  cursor: pointer;
   width: 90px;
   height: 90px;
   position: absolute;
@@ -106,4 +103,15 @@ canvas {
 
 #money-amount {
   font-size: 30px;
+}
+
+.inactive {
+  cursor: default;
+  background-color: grey;
+}
+
+.active {
+  background-color: white;
+  cursor: hand;
+  cursor: pointer;
 }
