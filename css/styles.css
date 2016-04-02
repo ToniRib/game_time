@@ -60,6 +60,18 @@ canvas {
   margin: 0 auto;
 }
 
+.win-screen {
+  display: inline-block;
+  cursor: hand;
+  cursor: pointer;
+  margin: 0 auto;
+  width: 800px;
+  height: 500px;
+  background-color: white;
+  z-index: 5;
+  display: none;
+}
+
 .tower-button {
   border-radius: 7px;
   width: 90px;
