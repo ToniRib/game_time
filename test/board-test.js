@@ -1,5 +1,6 @@
 var assert = require('chai').assert;
-const Board = require('../lib/board.js');
+const Board = require('../lib/board');
+const SimpleTower = require('../lib/simple-tower');
 
 describe('can build a board', function(){
 
@@ -95,5 +96,31 @@ describe('board has knowledge of turn tiles', function() {
     let turnTiles = board.getTurnTiles();
 
     assert.equal(turnTiles.length, 2);
+  });
+});
+
+describe('board has knowledge of tiles with towers', function() {
+  it('returns a list of build tiles with towers', function() {
+    let board = new Board({ 15: {type: 'build'}, 32: {type:'build'} });
+    let buildTile = board.tiles[15];
+    let simpleTower = new SimpleTower({ x: buildTile.centerX(), y: buildTile.centerY() });
+    buildTile.addTower(simpleTower);
+
+    let tilesWithTowers = board.getTilesWithTowers();
+
+    assert.equal(tilesWithTowers.length, 1);
+  });
+
+  it('can remove all towers', function() {
+    let board = new Board({ 15: {type: 'build'}, 32: {type:'build'} });
+    let buildTile = board.tiles[15];
+    let simpleTower = new SimpleTower({ x: buildTile.centerX(), y: buildTile.centerY() });
+    buildTile.addTower(simpleTower);
+
+    board.removeAllTowers();
+
+    let tilesWithTowers = board.getTilesWithTowers();
+
+    assert.equal(tilesWithTowers.length, 0);
   });
 });
