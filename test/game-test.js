@@ -173,3 +173,47 @@ describe('game turn logic', function(){
     assert.notEqual(enemyOneCurrentDirection, enemyOneNewDirection);
   });
 });
+
+describe('game level logic', function() {
+  it('starts at level one, difficulty one', function() {
+    let game = new Game();
+
+    assert.equal(game.currentLevel.stage, 1);
+    assert.equal(game.currentLevel.difficulty, 1);
+  });
+
+  it('can update the current level of the game', function() {
+    let game = new Game();
+    game.updateLevel(2, 2);
+
+    assert.equal(game.currentLevel.stage, 2);
+    assert.equal(game.currentLevel.difficulty, 2);
+  });
+
+  it('can load the next level', function() {
+    let game = new Game();
+    game.updateLevel(2, 2);
+    game.loadNextLevel();
+
+    assert.equal(game.currentLevel.stage, 3);
+    assert.equal(game.currentLevel.difficulty, 1);
+  });
+
+  it('can load the next difficulty', function() {
+    let game = new Game();
+    game.updateLevel(2, 2);
+    game.loadNextDifficulty();
+
+    assert.equal(game.currentLevel.stage, 2);
+    assert.equal(game.currentLevel.difficulty, 3);
+  });
+
+  it('will load the next level if on the last difficulty', function() {
+    let game = new Game();
+    game.updateLevel(2, 3);
+    game.loadNextDifficulty();
+
+    assert.equal(game.currentLevel.stage, 3);
+    assert.equal(game.currentLevel.difficulty, 1);
+  });
+});
