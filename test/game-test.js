@@ -192,10 +192,10 @@ describe('game level logic', function() {
 
   it('can load the next level', function() {
     let game = new Game();
-    game.updateLevel(2, 2);
+    game.updateLevel(1, 2);
     game.loadNextLevel();
 
-    assert.equal(game.currentLevel.stage, 3);
+    assert.equal(game.currentLevel.stage, 2);
     assert.equal(game.currentLevel.difficulty, 1);
   });
 
@@ -210,10 +210,10 @@ describe('game level logic', function() {
 
   it('will load the next level if on the last difficulty', function() {
     let game = new Game();
-    game.updateLevel(2, 3);
+    game.updateLevel(1, 3);
     game.loadNextDifficulty();
 
-    assert.equal(game.currentLevel.stage, 3);
+    assert.equal(game.currentLevel.stage, 2);
     assert.equal(game.currentLevel.difficulty, 1);
   });
 });
