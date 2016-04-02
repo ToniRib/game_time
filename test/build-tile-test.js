@@ -60,3 +60,23 @@ describe('adds a tower to site', function() {
     assert.equal(buildTile.tower.x, 75);
   });
 });
+
+describe('removes a tower from site', function() {
+  it('sets the tower to null', function() {
+    let buildTile = new BuildTile({ x: 50, y: 50 });
+    let simpleTower = new SimpleTower({ x: buildTile.centerX(), y: buildTile.centerY() });
+    buildTile.addTower(simpleTower);
+    buildTile.removeTower();
+
+    assert.equal(null, buildTile.tower);
+  });
+
+  it('sets vacant to true', function() {
+    let buildTile = new BuildTile({ x: 50, y: 50 });
+    let simpleTower = new SimpleTower({ x: buildTile.centerX(), y: buildTile.centerY() });
+    buildTile.addTower(simpleTower);
+    buildTile.removeTower();
+
+    assert(buildTile.vacant);
+  });
+});
