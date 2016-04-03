@@ -1,3 +1,5 @@
+
+require('./image-loader-test.js');
 require('./game-test.js');
 require('./quick-enemy-test.js');
 require('./flash-tower-test.js');
