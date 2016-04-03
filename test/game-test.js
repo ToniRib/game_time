@@ -108,8 +108,8 @@ describe('game tower logic', function(){
   it('returns all tiles with towers', function(){
     let game = new Game();
     game.updateLevel('test', 1);
-
-    game.board.tiles[82].addTower('simple');
+    let simpleTower = new SimpleTower({ x: game.board.tiles[82].centerX, y: game.board.tiles[82].centerY });
+    game.board.tiles[82].addTower(simpleTower);
     let towerTiles = game.getTowerTiles();
 
     assert.equal(towerTiles.length, 1);
@@ -307,5 +307,36 @@ describe('game winning stars logic', function() {
     let stars = game.determineNumberOfStars();
 
     assert.equal(stars, 1);
+  });
+});
+
+describe("fast foward functionality", function(){
+  it('adjusts values when fast foward is clicked', function(){
+    let game = new Game();
+    game.updateLevel('test', 1);
+    let simpleTower = new SimpleTower({ x: game.board.tiles[22].centerX, y: game.board.tiles[22].centerY });
+    let enemySpeed = game.enemies[0].speed;
+    let tile = game.board.getTurnTiles()[0];
+    let tileBufferRange = tile.rangeBuffer;
+    game.board.tiles[22].addTower(simpleTower);
+    game.fastFoward();
+
+    assert.equal(simpleTower.fireRate, (simpleTower.fireRateRef / 2));
+    assert.equal(game.enemies[0].speed, (enemySpeed * 2));
+    assert.equal(tile.rangeBuffer, (tileBufferRange * 2));
+  });
+
+  it('adjusts values back to original', function(){
+    let game = new Game();
+    game.updateLevel('test', 1);
+    let simpleTower = new SimpleTower({ x: game.board.tiles[127].centerX, y: game.board.tiles[127].centerY });
+    game.board.tiles[127].addTower(simpleTower);
+    game.fastFoward();
+    let enemySpeed = game.enemies[2].speed;
+    let towerRate = simpleTower.fireRate;
+    game.refreshGameObjectValues();
+
+    assert.equal(towerRate, simpleTower.fireRateRef / 2);
+    assert.equal(game.enemies[0].speed, enemySpeed / 2);
   });
 });
