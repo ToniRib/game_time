@@ -217,3 +217,95 @@ describe('game level logic', function() {
     assert.equal(game.currentLevel.difficulty, 1);
   });
 });
+
+describe('game winning stars logic', function() {
+  it('returns 3 stars if user has lost 0 lives on difficulty 1', function() {
+    let game = new Game();
+    game.currentLevel.difficulty = 1;
+    game.lives = 5;
+
+    let stars = game.determineNumberOfStars();
+
+    assert.equal(stars, 3);
+  });
+
+  it('returns 3 stars if user has lost 0 lives on difficulty 2', function() {
+    let game = new Game();
+    game.currentLevel.difficulty = 2;
+    game.lives = 3;
+
+    let stars = game.determineNumberOfStars();
+
+    assert.equal(stars, 3);
+  });
+
+  it('returns 3 stars if user has lost 0 lives on difficulty 3', function() {
+    let game = new Game();
+    game.currentLevel.difficulty = 3;
+    game.lives = 1;
+
+    let stars = game.determineNumberOfStars();
+
+    assert.equal(stars, 3);
+  });
+
+  it('returns 2 stars if user has lost 1 life on difficulty 1', function() {
+    let game = new Game();
+    game.currentLevel.difficulty = 1;
+    game.lives = 4;
+
+    let stars = game.determineNumberOfStars();
+
+    assert.equal(stars, 2);
+  });
+
+  it('returns 2 stars if user has lost 1 life on difficulty 2', function() {
+    let game = new Game();
+    game.currentLevel.difficulty = 2;
+    game.lives = 2;
+
+    let stars = game.determineNumberOfStars();
+
+    assert.equal(stars, 2);
+  });
+
+  it('returns 1 star if user has lost 2 lives on difficulty 1', function() {
+    let game = new Game();
+    game.currentLevel.difficulty = 1;
+    game.lives = 3;
+
+    let stars = game.determineNumberOfStars();
+
+    assert.equal(stars, 1);
+  });
+
+  it('returns 1 star if user has lost 2 lives on difficulty 2', function() {
+    let game = new Game();
+    game.currentLevel.difficulty = 2;
+    game.lives = 1;
+
+    let stars = game.determineNumberOfStars();
+
+    assert.equal(stars, 1);
+  });
+
+  it('returns 1 star if user has lost 3 lives on difficulty 1', function() {
+    let game = new Game();
+    game.currentLevel.difficulty = 1;
+    game.lives = 2;
+
+    let stars = game.determineNumberOfStars();
+
+    assert.equal(stars, 1);
+  });
+
+  it('returns 1 star if user has lost 4 lives on difficulty 1', function() {
+    let game = new Game();
+    game.currentLevel.difficulty = 1;
+    game.lives = 1;
+
+    let stars = game.determineNumberOfStars();
+
+    assert.equal(stars, 1);
+  });
+});
