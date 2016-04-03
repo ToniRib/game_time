@@ -60,6 +60,75 @@ canvas {
   margin: 0 auto;
 }
 
+.win-screen,
+.lose-screen {
+  display: inline-block;
+  cursor: hand;
+  cursor: pointer;
+  margin: 0 auto;
+  width: 800px;
+  height: 500px;
+  background-color: white;
+  z-index: 5;
+  display: none;
+}
+
+.win-title,
+.lose-title {
+  font-size: 40px;
+  margin-top: 50px;
+  margin-bottom: 5px;
+}
+
+.star {
+  width: 50px;
+  display: none;
+}
+
+.btn {
+  border-radius: 5px;
+  padding: 15px 25px;
+  font-size: 22px;
+  text-decoration: none;
+  margin: 20px;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+}
+
+.btn:active {
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  box-shadow: 0px 1px 0px 0px;
+}
+
+.blue {
+  background-color: #55acee;
+  box-shadow: 0px 5px 0px 0px #3C93D5;
+}
+
+.blue:hover {
+  background-color: #6FC6FF;
+}
+
+.green {
+  background-color: #2ecc71;
+  box-shadow: 0px 5px 0px 0px #15B358;
+}
+
+.green:hover {
+  background-color: #48E68B;
+}
+
+.orange {
+  background-color: #e67e22;
+  box-shadow: 0px 5px 0px 0px #CD6509;
+}
+
+.orange:hover {
+  background-color: #FF983C;
+}
+
 .tower-button {
   border-radius: 7px;
   width: 90px;
