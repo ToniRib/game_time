@@ -60,7 +60,8 @@ canvas {
   margin: 0 auto;
 }
 
-.win-screen {
+.win-screen,
+.lose-screen {
   display: inline-block;
   cursor: hand;
   cursor: pointer;
@@ -72,7 +73,8 @@ canvas {
   display: none;
 }
 
-.win-title {
+.win-title,
+.lose-title {
   font-size: 40px;
   margin-top: 50px;
 }
