@@ -14,13 +14,35 @@ p {
   margin: 1px 0;
 }
 
-.tower-text {
-  font-size: 14px;
+.row {
+  width: 100%;
+}
+
+.row:before,
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.instructions {
+  float: left;
+  width: 20%;
 }
 
 .canvas-container {
-  width: 100%;
+  float: left;
   text-align: center;
+  width: 60%;
+}
+
+.tower-descriptions {
+  float: left;
+  width: 20%;
+}
+
+.tower-text {
+  font-size: 14px;
 }
 
 .menu-container {
@@ -44,6 +66,7 @@ p {
   color: #c20000;
   margin: 0 auto;
   position: relative;
+  text-align: center;
   width: 800px;
 }
 

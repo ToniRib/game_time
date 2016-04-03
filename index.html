@@ -8,31 +8,41 @@
     <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body>
-    <div>
+    <div class="row">
       <h1>Super Happy Animal Food Time!</h1>
     </div>
-    <div class="canvas-container">
-      <canvas id="game-canvas" width="800" height="500"></canvas>
+    <div class="row">
+      <div class="instructions">
+        <h3>Instructions</h3>
+      </div>
+      <div class="canvas-container">
+        <canvas id="game-canvas" width="800" height="500"></canvas>
+      </div>
+      <div class="tower-descriptions">
+        <h3>Tower Descriptions</h3>
+      </div>
     </div>
-    <div class="menu-container">
-      <div class="tower-button active" id="simple-tower">
-        <img class="tower-image" src="/sprites/super-tower-2.png">
-        <p class="tower-text">Meow Tower</p>
-        <p class="tower-price">$100</p>
-      </div>
-      <div class="tower-button active" id="flash-tower">
-        <img class="tower-image" src="/sprites/whale-tower.gif">
-        <p class="tower-text">Whale Tower</p>
-        <p class="tower-price">$150</p>
-      </div>
-      <div class="start-button" id="start-button">
-        <button type="button" id="start">Start</button>
-      </div>
-      <div class="monies" id="monies">
-        <p>Paper Monies<br><span id="money-amount"></span></p>
-      </div>
-      <div class="lives-left" id="lives-container">
-        <p>Lives<br><span id="number-of-lives"></span></p>
+    <div class="row">
+      <div class="menu-container">
+        <div class="tower-button active" id="simple-tower">
+          <img class="tower-image" src="/sprites/super-tower-2.png">
+          <p class="tower-text">Meow Tower</p>
+          <p class="tower-price">$100</p>
+        </div>
+        <div class="tower-button active" id="flash-tower">
+          <img class="tower-image" src="/sprites/whale-tower.gif">
+          <p class="tower-text">Whale Tower</p>
+          <p class="tower-price">$150</p>
+        </div>
+        <div class="start-button" id="start-button">
+          <button type="button" id="start">Start</button>
+        </div>
+        <div class="monies" id="monies">
+          <p>Paper Monies<br><span id="money-amount"></span></p>
+        </div>
+        <div class="lives-left" id="lives-container">
+          <p>Lives<br><span id="number-of-lives"></span></p>
+        </div>
       </div>
     </div>
     <div id="tower-prompt">
