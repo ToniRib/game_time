@@ -27,6 +27,7 @@ p {
 
 .instructions {
   float: left;
+  text-align: center;
   width: 20%;
 }
 
@@ -38,6 +39,7 @@ p {
 
 .tower-descriptions {
   float: left;
+  text-align: center;
   width: 20%;
 }
 
