@@ -22,6 +22,21 @@
       </div>
       <div class="canvas-container">
         <canvas id="game-canvas" width="800" height="500"></canvas>
+        <div class="win-screen" id="win-screen">
+          <h2 class="win-title">You won!</h2>
+          <div class="stars">
+            <img src="http://pngimg.com/upload/star_PNG1580.png" class="star" alt="star" id="star-1" />
+            <img src="http://pngimg.com/upload/star_PNG1580.png" class="star" alt="star" id="star-2" />
+            <img src="http://pngimg.com/upload/star_PNG1580.png" class="star" alt="star" id="star-3" />
+          </div>
+          <a href="#" class="btn blue" id="next-difficulty">Play Next Difficulty</a><br>
+          <a href="#" class="btn green" id="next-level">Play Next Level</a><br>
+          <a href="#" class="btn orange" id="replay">Replay This Level</a>
+        </div>
+        <div class="lose-screen" id="lose-screen">
+          <h2 class="lose-title">You lost!</h2>
+          <a href="#" class="btn orange" id="replay-lose">Replay This Level</a>
+        </div>
       </div>
       <div class="tower-descriptions">
         <h3>Tower Descriptions</h3>
@@ -48,7 +63,10 @@
           <p class="tower-price">$150</p>
         </div>
         <div class="start-button" id="start-button">
-          <button type="button" id="start">Start</button>
+          <a href="#" class="btn blue" id="start">Start</a>
+        </div>
+        <div class="fast-foward-button" id="fast-foward-button">
+          <a href="#" class="btn blue" id="ff">FF >></a>
         </div>
         <div class="monies" id="monies">
           <p>Paper Monies<br><span id="money-amount"></span></p>
