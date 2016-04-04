@@ -4,6 +4,7 @@ require('./image-loader-test.js');
 require('./game-test.js');
 require('./quick-enemy-test.js');
 require('./monster-enemy-test.js');
+require('./toast-enemy-test.js');
 require('./flash-tower-test.js');
 require('./simple-enemy-test.js');
 require('./board-test.js');
