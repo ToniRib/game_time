@@ -21,21 +21,58 @@
         </div>
       </div>
       <div class="canvas-container">
-        <canvas id="game-canvas" width="800" height="500"></canvas>
-        <div class="win-screen" id="win-screen">
-          <h2 class="win-title">You won!</h2>
-          <div class="stars">
-            <img src="http://pngimg.com/upload/star_PNG1580.png" class="star" alt="star" id="star-1" />
-            <img src="http://pngimg.com/upload/star_PNG1580.png" class="star" alt="star" id="star-2" />
-            <img src="http://pngimg.com/upload/star_PNG1580.png" class="star" alt="star" id="star-3" />
+        <div class="row">
+          <canvas id="game-canvas" width="800" height="500"></canvas>
+          <div class="win-screen" id="win-screen">
+            <h2 class="win-title">You won!</h2>
+            <div class="stars">
+              <img src="http://pngimg.com/upload/star_PNG1580.png" class="star" alt="star" id="star-1" />
+              <img src="http://pngimg.com/upload/star_PNG1580.png" class="star" alt="star" id="star-2" />
+              <img src="http://pngimg.com/upload/star_PNG1580.png" class="star" alt="star" id="star-3" />
+            </div>
+            <a href="#" class="btn blue" id="next-difficulty">Play Next Difficulty</a><br>
+            <a href="#" class="btn green" id="next-level">Play Next Level</a><br>
+            <a href="#" class="btn orange" id="replay">Replay This Level</a>
           </div>
-          <a href="#" class="btn blue" id="next-difficulty">Play Next Difficulty</a><br>
-          <a href="#" class="btn green" id="next-level">Play Next Level</a><br>
-          <a href="#" class="btn orange" id="replay">Replay This Level</a>
+          <div class="lose-screen" id="lose-screen">
+            <h2 class="lose-title">You lost!</h2>
+            <a href="#" class="btn orange" id="replay-lose">Replay This Level</a>
+          </div>
         </div>
-        <div class="lose-screen" id="lose-screen">
-          <h2 class="lose-title">You lost!</h2>
-          <a href="#" class="btn orange" id="replay-lose">Replay This Level</a>
+        <div class="row">
+          <div class="menu-container">
+            <div class="tower-button active" id="simple-tower">
+              <img class="tower-image" src="/sprites/super-tower-2.png">
+              <p class="tower-text">Meow Tower</p>
+              <p class="tower-price">$100</p>
+            </div>
+            <div class="tower-button active" id="flash-tower">
+              <img class="tower-image" src="/sprites/whale-tower.gif">
+              <p class="tower-text">Whale Tower</p>
+              <p class="tower-price">$150</p>
+            </div>
+            <div class="start-button" id="start-button">
+              <a href="#" class="btn blue" id="start">Start</a>
+            </div>
+            <div class="fast-foward-button" id="fast-foward-button">
+              <a href="#" class="btn blue" id="play">></a>
+              <a href="#" class="btn blue" id="ff">>></a>
+            </div>
+            <div class="monies" id="monies">
+              <p>Paper Monies<br><span id="money-amount"></span></p>
+            </div>
+            <div class="lives-left" id="lives-container">
+              <p>Lives<br><span id="number-of-lives"></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div id="tower-prompt">
+            <h5>^^ Click on a tower to add it ^^ </h5>
+          </div>
+          <div id="click-build-site-prompt">
+            <h5>Click on an empty build site square <span><img src="/sprites/build-site.jpg" alt="build site tile" width="20" /></span> then click on a tower to add it to that space</h5>
+          </div>
         </div>
       </div>
       <div class="tower-descriptions">
@@ -49,39 +86,6 @@
           <p>Shoots all enemies within range but does very little damage.</p>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="menu-container">
-        <div class="tower-button active" id="simple-tower">
-          <img class="tower-image" src="/sprites/super-tower-2.png">
-          <p class="tower-text">Meow Tower</p>
-          <p class="tower-price">$100</p>
-        </div>
-        <div class="tower-button active" id="flash-tower">
-          <img class="tower-image" src="/sprites/whale-tower.gif">
-          <p class="tower-text">Whale Tower</p>
-          <p class="tower-price">$150</p>
-        </div>
-        <div class="start-button" id="start-button">
-          <a href="#" class="btn blue" id="start">Start</a>
-        </div>
-        <div class="fast-foward-button" id="fast-foward-button">
-          <a href="#" class="btn blue" id="play">></a>
-          <a href="#" class="btn blue" id="ff">>></a>
-        </div>
-        <div class="monies" id="monies">
-          <p>Paper Monies<br><span id="money-amount"></span></p>
-        </div>
-        <div class="lives-left" id="lives-container">
-          <p>Lives<br><span id="number-of-lives"></span></p>
-        </div>
-      </div>
-    </div>
-    <div id="tower-prompt">
-      <h5>^^ Click on a tower to add it ^^ </h5>
-    </div>
-    <div id="click-build-site-prompt">
-      <h5>Click on an empty build site square <span><img src="/sprites/build-site.jpg" alt="build site tile" width="20" /></span> then click on a tower to add it to that space</h5>
     </div>
     <script src="main.bundle.js"></script>
   </body>

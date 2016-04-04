@@ -245,3 +245,14 @@ canvas {
   cursor: hand;
   cursor: pointer;
 }
+
+@media screen and (max-width: 1350px) {
+  .instructions,
+  .tower-descriptions {
+    width: 15%;
+  }
+
+  .canvas-container {
+    width: 70%;
+  }
+}
