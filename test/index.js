@@ -1,4 +1,5 @@
-
+require('./sprite-loader-test.js');
+require('./sprite-test.js');
 require('./image-loader-test.js');
 require('./game-test.js');
 require('./quick-enemy-test.js');
