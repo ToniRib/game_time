@@ -10,3 +10,5 @@ require('./path-tile-test.js');
 require('./tile-test.js');
 require('./build-tile-test.js');
 require('./simple-tower-test.js');
+require('./continuous-fire-tower-test.js');
+require('./heavy-damage-tower-test.js');

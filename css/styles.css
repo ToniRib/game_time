@@ -168,12 +168,21 @@ canvas {
   left: 5px;
 }
 
-#flash-tower {
+#heavy-damage-tower {
   left: 100px;
+}
+
+#continuous-fire-tower {
+  left: 195px;
+}
+
+#flash-tower {
+  left: 290px;
 }
 
 .tower-image {
   margin-top: 5px;
+  width: 40px;
 }
 
 .lives-left {
