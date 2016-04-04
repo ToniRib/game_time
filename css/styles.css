@@ -168,12 +168,17 @@ canvas {
   left: 5px;
 }
 
-#flash-tower {
+#heavy-damage-tower {
   left: 100px;
+}
+
+#flash-tower {
+  left: 195px;
 }
 
 .tower-image {
   margin-top: 5px;
+  width: 40px;
 }
 
 .lives-left {
