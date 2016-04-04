@@ -7,7 +7,6 @@ it('continuous fire tower tower is a function', function (){
 });
 
 describe('continuous fire tower tower attributes', function (){
-
   it('tower has a damage amount', function (){
     let tower = new ContinuousFireTower({x: 1, y: 1});
     assert.typeOf(tower.damage, 'number');

@@ -172,8 +172,12 @@ canvas {
   left: 100px;
 }
 
-#flash-tower {
+#continuous-fire-tower {
   left: 195px;
+}
+
+#flash-tower {
+  left: 290px;
 }
 
 .tower-image {
