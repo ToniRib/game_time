@@ -21,7 +21,7 @@ describe('toast enemy attributes', function() {
   it('has a speed', function() {
     let enemy = new ToastEnemy({ x: 1, y: 2 });
     assert.typeOf(enemy.speed, 'number');
-    assert.equal(1, enemy.speed);
+    assert.equal(0.8, enemy.speed);
   });
 
   it('has health', function() {
@@ -55,27 +55,27 @@ describe('toast enemy movement', function() {
     let enemy = new ToastEnemy({ x: 0, y: 0 });
     enemy.move();
 
-    assert.equal(enemy.x, 1);
+    assert.equal(enemy.x, 0.8);
   });
 
   it('moves left by value of speed if currentDirection is left', function() {
     let enemy = new ToastEnemy({ x: 0, y: 0 });
     enemy.setDirection('left').move();
 
-    assert.equal(enemy.x, -1);
+    assert.equal(enemy.x, -0.8);
   });
 
   it('moves up by value of speed if currentDirection is up', function() {
     let enemy = new ToastEnemy({ x: 0, y: 0 });
     enemy.setDirection('up').move();
 
-    assert.equal(enemy.y, -1);
+    assert.equal(enemy.y, -0.8);
   });
 
   it('moves up by value of speed if currentDirection is down', function() {
     let enemy = new ToastEnemy({ x: 0, y: 0 });
     enemy.setDirection('down').move();
 
-    assert.equal(enemy.y, 1);
+    assert.equal(enemy.y, 0.8);
   });
 });
