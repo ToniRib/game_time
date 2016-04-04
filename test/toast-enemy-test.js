@@ -27,7 +27,7 @@ describe('toast enemy attributes', function() {
   it('has health', function() {
     let enemy = new ToastEnemy({ x: 1, y: 2 });
     assert.typeOf(enemy.health, 'number');
-    assert.equal(200, enemy.health);
+    assert.equal(175, enemy.health);
   });
 
   it('currentDirection is right by default', function() {
@@ -39,8 +39,8 @@ describe('toast enemy attributes', function() {
 describe('toast enemy takes damage from a tower', function() {
   it('its health decreases by a given amount', function() {
     let enemy = new ToastEnemy({ x: 1, y: 2 });
-    enemy.hit(20);
-    assert.equal(enemy.health, 180);
+    enemy.hit(15);
+    assert.equal(enemy.health, 160);
   });
 
   it('it dies if health dips to 0', function() {
