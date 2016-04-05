@@ -168,12 +168,21 @@ canvas {
   left: 5px;
 }
 
-#flash-tower {
+#heavy-damage-tower {
   left: 100px;
+}
+
+#continuous-fire-tower {
+  left: 195px;
+}
+
+#flash-tower {
+  left: 290px;
 }
 
 .tower-image {
   margin-top: 5px;
+  width: 40px;
 }
 
 .lives-left {
@@ -205,16 +214,9 @@ canvas {
   top: 5px;
 }
 
-.start-button button {
+.start-button a {
   height: 30px;
-  width: 80px;
-  cursor: hand;
-  cursor: pointer;
-}
-
-.fast-foward-button button {
-  height: 30px;
-  width: 80px;
+  width: 50px;
   cursor: hand;
   cursor: pointer;
 }
@@ -226,6 +228,15 @@ canvas {
   top: 5px;
 }
 
+.fast-foward-button a {
+  height: 30px;
+  width: 15px;
+  cursor: hand;
+  cursor: pointer;
+  padding: 15px;
+  margin: auto 5px;
+}
+
 #number-of-lives {
   font-size: 50px;
 }
@@ -233,7 +244,6 @@ canvas {
 #money-amount {
   font-size: 30px;
 }
-
 
 .inactive {
   cursor: default;
