@@ -196,15 +196,16 @@ canvas {
 }
 
 .start-button {
-  right: 205px;
+  right: 190px;
   position: absolute;
   text-align: center;
   top: 5px;
 }
 
 .start-button a {
-  height: 30px;
-  width: 50px;
+  font-size: 18px;
+  height: 20px;
+  width: 40px;
   cursor: hand;
   cursor: pointer;
 }
@@ -253,4 +254,20 @@ canvas {
   .canvas-container {
     width: 70%;
   }
+}
+
+.sell-button {
+  right: 290px;
+  position: absolute;
+  text-align: center;
+  top: 5px;
+  display: none;
+}
+
+.sell-button a {
+  font-size: 18px;
+  height: 20px;
+  width: 40px;
+  cursor: hand;
+  cursor: pointer;
 }
