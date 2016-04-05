@@ -16,7 +16,7 @@ describe('flash tower attributes', function (){
   it('tower has a range', function (){
     let tower = new FlashTower({ x: 1, y: 1 });
     assert.typeOf(tower.range, 'number');
-    assert.equal(160, tower.range);
+    assert.equal(140, tower.range);
   });
 
   it('tower has a fire-rate', function (){
