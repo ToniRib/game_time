@@ -169,6 +169,10 @@ canvas {
   width: 40px;
 }
 
+.dog-image {
+  margin-top: 12px;
+}
+
 .lives-left {
   background-color: #adff74;
   border-radius: 7px;
