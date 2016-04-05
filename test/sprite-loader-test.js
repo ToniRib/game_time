@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-const SpriteLoader = require('../lib/sprite-loader');
+const SpriteLoader = require('../lib/sprite-engine');
 
 describe('it loads sprites', function(){
   it('loads enemies', function(){
