@@ -5,7 +5,7 @@ it('simple enemy is a function', function (){
   assert.typeOf(SimpleEnemy, 'function');
 });
 
-describe('enemy attributes', function() {
+describe('simple enemy attributes', function() {
   it('has a x coord', function() {
     let enemy = new SimpleEnemy({x: 1, y: 2});
     assert.typeOf(enemy.x, 'number');
@@ -32,21 +32,21 @@ describe('enemy attributes', function() {
   });
 });
 
-describe('takes damage from a tower', function() {
+describe('simple takes damage from a tower', function() {
   it('its health decreases by a given amount', function() {
     let enemy = new SimpleEnemy({x: 1, y: 2});
     enemy.hit(20);
-    assert.equal(enemy.health, 80);
+    assert.equal(enemy.health, 100);
   });
 
   it('it dies if health dips to 0', function() {
     let enemy = new SimpleEnemy({x: 1, y: 2});
-    enemy.hit(110);
+    enemy.hit(200);
     assert.isNotTrue(enemy.alive);
   });
 });
 
-describe('enemy movement', function() {
+describe('simple enemy movement', function() {
   it('moves right by value of speed if currentDirection is right', function() {
     let enemy = new SimpleEnemy({x: 0, y: 0});
     enemy.move();

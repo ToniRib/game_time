@@ -16,13 +16,13 @@ describe('flash tower attributes', function (){
   it('tower has a range', function (){
     let tower = new FlashTower({ x: 1, y: 1 });
     assert.typeOf(tower.range, 'number');
-    assert.equal(120, tower.range);
+    assert.equal(160, tower.range);
   });
 
   it('tower has a fire-rate', function (){
     let tower = new FlashTower({ x: 1, y: 1 });
     assert.typeOf(tower.fireRate, 'number');
-    assert.equal(600, tower.fireRate);
+    assert.equal(1000, tower.fireRate);
   });
 
   it('tower has an x coord', function (){
@@ -64,32 +64,32 @@ describe('flash tower shoot functionality', function() {
 
   describe('range functionality', function(){
     it('enemy is in range', function(){
-      let tower = new FlashTower({ x: 1, y: 2 });
-      tower.range = 4;
-      let enemy = new SimpleEnemy({ x: 2, y: 2 });
+      let tower = new FlashTower({ x: 0, y: 0 });
+      tower.range = 50;
+      let enemy = new SimpleEnemy({ x: 10, y: 10 });
       assert(tower.inRange(enemy));
     });
 
     it('enemy is in range at edge of range', function(){
-      let tower = new FlashTower({ x: 1, y: 2 });
-      tower.range = 4;
-      let enemy = new SimpleEnemy({ x: 5, y: 2 });
+      let tower = new FlashTower({ x: 0, y: 0 });
+      tower.range = 50;
+      let enemy = new SimpleEnemy({ x: 0, y: 15 });
       assert(tower.inRange(enemy));
     });
 
     it('enemy is not in range', function(){
-      let tower = new FlashTower({ x: 1, y: 2 });
-      tower.range = 4;
-      let enemy = new SimpleEnemy({ x: 100, y: 100 });
+      let tower = new FlashTower({ x: 0, y: 0 });
+      tower.range = 50;
+      let enemy = new SimpleEnemy({ x: 100, y: 10 });
       assert.isNotTrue(tower.inRange(enemy));
     });
 
     it('returns a list of enemies within the tower range', function() {
-      let tower = new FlashTower({ x: 1, y: 2 });
-      tower.range = 4;
+      let tower = new FlashTower({ x: 0, y: 0 });
+      tower.range = 50;
       let enemy1 = new SimpleEnemy({ x: 5, y: 2 });
       let enemy2 = new SimpleEnemy({ x: -2, y: 2 });
-      let enemy3 = new SimpleEnemy({ x: 15, y: 2 });
+      let enemy3 = new SimpleEnemy({ x: 100, y: 2 });
 
       let enemiesInRange = tower.enemiesWithinRange([enemy1, enemy2, enemy3]);
 
@@ -109,8 +109,8 @@ describe('flash tower shoot functionality', function() {
       let enemiesInRange = tower.enemiesWithinRange([enemy1, enemy2, enemy3]);
       tower.shoot(enemiesInRange);
 
-      assert.equal(90, enemy1.health);
-      assert.equal(90, enemy2.health);
+      assert.equal(120, enemy1.health);
+      assert.equal(120, enemy2.health);
     });
   });
 });

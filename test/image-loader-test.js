@@ -17,7 +17,7 @@ describe('loads images by level', function(){
     imageLoader = new ImageLoader();
     let images2 = imageLoader.init(2);
 
-    assert.equal(images1.grassTile.src, 'http://localhost:8080/sprites/grass-2.jpg');
+    assert.equal(images1.grassTile.src, 'http://localhost:8080/sprites/pixel-grass.jpg');
     assert.equal(images2.grassTile.src, 'http://localhost:8080/sprites/desert-tiles.png');
   });
 });
