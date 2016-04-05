@@ -60,32 +60,32 @@ describe('continuous fire tower shoot functionality', function() {
 
   describe('continuous fire tower range functionality', function(){
     it('enemy is in range', function(){
-      let tower = new ContinuousFireTower({x: 1, y: 2});
-      tower.range = 4;
-      let enemy = new SimpleEnemy({x: 2, y: 2});
+      let tower = new ContinuousFireTower({ x: 0, y: 0 });
+      tower.range = 50;
+      let enemy = new SimpleEnemy({ x: 10, y: 10 });
       assert(tower.inRange(enemy));
     });
 
     it('enemy is in range at edge of range', function(){
-      let tower = new ContinuousFireTower({x: 1, y: 2});
-      tower.range = 4;
-      let enemy = new SimpleEnemy({x: 5, y: 2});
+      let tower = new ContinuousFireTower({ x: 0, y: 0 });
+      tower.range = 50;
+      let enemy = new SimpleEnemy({ x: 0, y: 15 });
       assert(tower.inRange(enemy));
     });
 
     it('enemy is not in range', function(){
-      let tower = new ContinuousFireTower({x: 1, y: 2});
-      tower.range = 4;
-      let enemy = new SimpleEnemy({x: 100, y: 100});
+      let tower = new ContinuousFireTower({ x: 0, y: 0 });
+      tower.range = 50;
+      let enemy = new SimpleEnemy({ x: 100, y: 10 });
       assert.isNotTrue(tower.inRange(enemy));
     });
 
     it('returns a list of enemies within the tower range', function() {
-      let tower = new ContinuousFireTower({x: 1, y: 2});
-      tower.range = 4;
-      let enemy1 = new SimpleEnemy({x: 5, y: 2});
-      let enemy2 = new SimpleEnemy({x: -2, y: 2});
-      let enemy3 = new SimpleEnemy({x: 15, y: 2});
+      let tower = new ContinuousFireTower({ x: 0, y: 0 });
+      tower.range = 50;
+      let enemy1 = new SimpleEnemy({ x: 5, y: 2 });
+      let enemy2 = new SimpleEnemy({ x: -2, y: 2 });
+      let enemy3 = new SimpleEnemy({ x: 100, y: 2 });
 
       let enemiesInRange = tower.enemiesWithinRange([enemy1, enemy2, enemy3]);
 
@@ -95,11 +95,11 @@ describe('continuous fire tower shoot functionality', function() {
     });
 
     it('selects first enemy in range', function() {
-      let tower = new ContinuousFireTower({x: 1, y: 2});
-      tower.range = 4;
-      let enemy1 = new SimpleEnemy({x: 5, y: 2});
-      let enemy2 = new SimpleEnemy({x: -2, y: 2});
-      let enemy3 = new SimpleEnemy({x: 15, y: 2});
+      let tower = new ContinuousFireTower({ x: 0, y: 0 });
+      tower.range = 50;
+      let enemy1 = new SimpleEnemy({ x: 5, y: 2 });
+      let enemy2 = new SimpleEnemy({ x: -2, y: 2 });
+      let enemy3 = new SimpleEnemy({ x: 100, y: 2 });
 
       let enemySelected = tower.selectEnemyToShoot([enemy1, enemy2, enemy3]);
       assert.equal(enemySelected, enemy1);
@@ -113,7 +113,7 @@ describe('continuous fire tower shoot functionality', function() {
 
       tower.shoot([enemy1]);
 
-      assert.equal(enemy1.health, 95);
+      assert.equal(enemy1.health, 120);
     });
   });
 });

@@ -21,13 +21,13 @@ describe('monster enemy attributes', function() {
   it('has a speed', function() {
     let enemy = new MonsterEnemy({ x: 1, y: 2 });
     assert.typeOf(enemy.speed, 'number');
-    assert.equal(0.2, enemy.speed);
+    assert.equal(0.3, enemy.speed);
   });
 
   it('has health', function() {
     let enemy = new MonsterEnemy({ x: 1, y: 2 });
     assert.typeOf(enemy.health, 'number');
-    assert.equal(500, enemy.health);
+    assert.equal(1000, enemy.health);
   });
 
   it('currentDirection is right by default', function() {
@@ -40,7 +40,7 @@ describe('monster enemy takes damage from a tower', function() {
   it('its health decreases by a given amount', function() {
     let enemy = new MonsterEnemy({ x: 1, y: 2 });
     enemy.hit(20);
-    assert.equal(enemy.health, 480);
+    assert.equal(enemy.health, 980);
   });
 
   it('it dies if health dips to 0', function() {
@@ -55,27 +55,27 @@ describe('monster enemy movement', function() {
     let enemy = new MonsterEnemy({ x: 0, y: 0 });
     enemy.move();
 
-    assert.equal(enemy.x, 0.2);
+    assert.equal(enemy.x, 0.3);
   });
 
   it('moves left by value of speed if currentDirection is left', function() {
     let enemy = new MonsterEnemy({ x: 0, y: 0 });
     enemy.setDirection('left').move();
 
-    assert.equal(enemy.x, -0.2);
+    assert.equal(enemy.x, -0.3);
   });
 
   it('moves up by value of speed if currentDirection is up', function() {
     let enemy = new MonsterEnemy({ x: 0, y: 0 });
     enemy.setDirection('up').move();
 
-    assert.equal(enemy.y, -0.2);
+    assert.equal(enemy.y, -0.3);
   });
 
   it('moves up by value of speed if currentDirection is down', function() {
     let enemy = new MonsterEnemy({ x: 0, y: 0 });
     enemy.setDirection('down').move();
 
-    assert.equal(enemy.y, 0.2);
+    assert.equal(enemy.y, 0.3);
   });
 });

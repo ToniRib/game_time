@@ -27,7 +27,7 @@ describe('quick enemy attributes', function() {
   it('has health', function() {
     let enemy = new QuickEnemy({ x: 1, y: 2 });
     assert.typeOf(enemy.health, 'number');
-    assert.equal(60, enemy.health);
+    assert.equal(80, enemy.health);
   });
 
   it('currentDirection is right by default', function() {
@@ -40,12 +40,12 @@ describe('quick enemy takes damage from a tower', function() {
   it('its health decreases by a given amount', function() {
     let enemy = new QuickEnemy({ x: 1, y: 2 });
     enemy.hit(20);
-    assert.equal(enemy.health, 40);
+    assert.equal(enemy.health, 60);
   });
 
   it('it dies if health dips to 0', function() {
     let enemy = new QuickEnemy({ x: 1, y: 2 });
-    enemy.hit(70);
+    enemy.hit(200);
     assert.isNotTrue(enemy.alive);
   });
 });
