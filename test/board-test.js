@@ -124,3 +124,28 @@ describe('board has knowledge of tiles with towers', function() {
     assert.equal(tilesWithTowers.length, 0);
   });
 });
+
+describe('board keeps track of clicked tiles', function() {
+  it('can set a current tile', function() {
+    let board = new Board({});
+    board.setCurrentTile(25, 25);
+
+    assert.equal(board.currentTile, board.tiles[0]);
+  });
+
+  it('keeps track of last tile', function() {
+    let board = new Board({});
+    board.setCurrentTile(25, 25);
+    board.setCurrentTile(75, 25);
+
+    assert.equal(board.currentTile, board.tiles[1]);
+    assert.equal(board.lastTile, board.tiles[0]);
+  });
+
+  it('can determine if current tile is a vacant build tile', function() {
+    let board = new Board({ 0: {type: 'build'} });
+    board.setCurrentTile(25, 25);
+
+    assert(board.currentTileIsAVacantBuildTile());
+  });
+});

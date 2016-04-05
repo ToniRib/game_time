@@ -1,3 +1,4 @@
+require('./board-test.js');
 require('./sprite-loader-test.js');
 require('./sprite-test.js');
 require('./image-loader-test.js');
@@ -7,7 +8,6 @@ require('./monster-enemy-test.js');
 require('./toast-enemy-test.js');
 require('./flash-tower-test.js');
 require('./simple-enemy-test.js');
-require('./board-test.js');
 require('./path-tile-test.js');
 require('./tile-test.js');
 require('./build-tile-test.js');
