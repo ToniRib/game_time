@@ -32,6 +32,10 @@ describe('continuous fire tower tower attributes', function (){
     assert.typeOf(tower.y, 'number');
   });
 
+  it('is a continuous fire tower', function() {
+    let tower = new ContinuousFireTower({ x: 1, y: 1 });
+    assert(tower.isContinuousFireTower());
+  });
 });
 
 describe('continuous fire tower shoot functionality', function() {

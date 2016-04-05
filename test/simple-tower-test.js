@@ -33,6 +33,10 @@ describe('tower attributes', function (){
     assert.typeOf(tower.y, 'number');
   });
 
+  it('is a simple tower', function() {
+    let tower = new SimpleTower({ x: 1, y: 1 });
+    assert(tower.isSimpleTower());
+  });
 });
 
 describe('shoot functionality', function() {
