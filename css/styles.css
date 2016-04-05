@@ -56,22 +56,6 @@ p {
   width: 800px;
 }
 
-#tower-prompt {
-  color: #c20000;
-  margin: 0 auto;
-  position: relative;
-  width: 800px;
-  display: none;
-}
-
-#click-build-site-prompt {
-  color: #c20000;
-  margin: 0 auto;
-  position: relative;
-  text-align: center;
-  width: 800px;
-}
-
 h5 {
   font-size: 14px;
   letter-spacing: 2px;
@@ -183,6 +167,10 @@ canvas {
 .tower-image {
   margin-top: 5px;
   width: 40px;
+}
+
+.dog-image {
+  margin-top: 12px;
 }
 
 .lives-left {

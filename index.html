@@ -16,7 +16,7 @@
         <h3>Instructions</h3>
         <div class="row">
           <p>
-            For each level, you start with a specific amount of paper monies and number of lives. Use your paper monies to place towers on the stone build sites.<br><br>Once you are ready, click 'Start' to call the enemies. Enemies will enter from the left and follow the brown path. You lose a life for any enemy that makes it to the right side of the board. If you lose all of your lives, you lose the game! You can replay a level if you lose, but you must win in order to move on to the next diffiulty or level.<br><br>Any time an enemy dies, you gain paper monies. Each tower is slightly different, so you may need to try several strategies to get all of the enemies.<br><br>Now go out there and destroy those enemies!
+            For each level, you start with a specific amount of paper monies and number of lives. Use your paper monies to place towers on the stone build sites. Hold your mouse down over a placed tower to see its range.<br><br>Once you are ready, click 'Start' to call the enemies. Enemies will enter from the left and follow the brown path. You lose a life for any enemy that makes it to the right side of the board. If you lose all of your lives, you lose the game! You can replay a level if you lose, but you must win in order to move on to the next diffiulty or level.<br><br>Any time an enemy dies, you gain paper monies to build more towers. Each tower is slightly different, so you may need to try several strategies to get all of the enemies.<br><br>Now go out there and destroy those enemies!
           </p>
         </div>
       </div>
@@ -41,25 +41,27 @@
         </div>
         <div class="row">
           <div class="menu-container">
-            <div class="tower-button active" id="simple-tower">
-              <img class="tower-image" src="/sprites/super-tower.png">
-              <p class="tower-text">Meow Tower</p>
-              <p class="tower-price">$100</p>
-            </div>
-            <div class="tower-button active" id="heavy-damage-tower">
-              <img class="tower-image" src="/sprites/panda.gif">
-              <p class="tower-text">Panda Tower</p>
-              <p class="tower-price">$135</p>
-            </div>
-            <div class="tower-button active" id="continuous-fire-tower">
-              <img class="tower-image" src="/sprites/bunny.gif">
-              <p class="tower-text">Bunny Tower</p>
-              <p class="tower-price">$150</p>
-            </div>
-            <div class="tower-button active" id="flash-tower">
-              <img class="tower-image" src="/sprites/dog.gif">
-              <p class="tower-text">Dog Tower</p>
-              <p class="tower-price">$175</p>
+            <div id="tower-buttons">
+              <div class="tower-button active" id="simple-tower">
+                <img class="tower-image" src="/sprites/super-tower.png">
+                <p class="tower-text">Meow Tower</p>
+                <p class="tower-price">$100</p>
+              </div>
+              <div class="tower-button active" id="heavy-damage-tower">
+                <img class="tower-image" src="/sprites/panda.gif">
+                <p class="tower-text">Panda Tower</p>
+                <p class="tower-price">$135</p>
+              </div>
+              <div class="tower-button active" id="continuous-fire-tower">
+                <img class="tower-image" src="/sprites/bunny.gif">
+                <p class="tower-text">Bunny Tower</p>
+                <p class="tower-price">$150</p>
+              </div>
+              <div class="tower-button active" id="flash-tower">
+                <img class="tower-image dog-image" src="/sprites/dog.gif">
+                <p class="tower-text">Dog Tower</p>
+                <p class="tower-price">$175</p>
+              </div>
             </div>
             <div class="start-button" id="start-button">
               <a href="#" class="btn blue" id="start">Start</a>
@@ -74,14 +76,6 @@
             <div class="lives-left" id="lives-container">
               <p>Lives<br><span id="number-of-lives"></span></p>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div id="tower-prompt">
-            <h5>^^ Click on a tower to add it ^^ </h5>
-          </div>
-          <div id="click-build-site-prompt">
-            <h5>Click on an empty build site square <span><img src="/sprites/build-site.jpg" alt="build site tile" width="20" /></span> then click on a tower to add it to that space</h5>
           </div>
         </div>
       </div>
