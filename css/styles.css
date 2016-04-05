@@ -215,6 +215,7 @@ canvas {
   position: absolute;
   text-align: center;
   top: 5px;
+  display: none;
 }
 
 .fast-foward-button a {
