@@ -13813,8 +13813,10 @@
 	  previousLevelDisplay: function previousLevelDisplay(game) {
 	    if (game.currentLevel.stage === 1) {
 	      $previousLevel.hide();
+	      $previousLevelLose.hide();
 	    } else {
 	      $previousLevel.show();
+	      $previousLevelLose.hide();
 	    }
 	  },
 
