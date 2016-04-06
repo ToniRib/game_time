@@ -36,7 +36,7 @@ describe('simple takes damage from a tower', function() {
   it('its health decreases by a given amount', function() {
     let enemy = new SimpleEnemy({x: 1, y: 2});
     enemy.hit(20);
-    assert.equal(enemy.health, 100);
+    assert.equal(enemy.health, 30);
   });
 
   it('it dies if health dips to 0', function() {

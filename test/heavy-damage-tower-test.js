@@ -125,7 +125,7 @@ describe('heavy damage tower shoot functionality', function() {
 
       tower.shoot([enemy1]);
 
-      assert.equal(enemy1.health, 120);
+      assert.equal(enemy1.health, 50);
     });
   });
 });

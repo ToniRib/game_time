@@ -21,13 +21,13 @@ describe('quick enemy attributes', function() {
   it('has a speed', function() {
     let enemy = new QuickEnemy({ x: 1, y: 2 });
     assert.typeOf(enemy.speed, 'number');
-    assert.equal(1.5, enemy.speed);
+    assert.equal(2.3, enemy.speed);
   });
 
   it('has health', function() {
     let enemy = new QuickEnemy({ x: 1, y: 2 });
     assert.typeOf(enemy.health, 'number');
-    assert.equal(80, enemy.health);
+    assert.equal(13, enemy.health);
   });
 
   it('currentDirection is right by default', function() {
@@ -39,8 +39,8 @@ describe('quick enemy attributes', function() {
 describe('quick enemy takes damage from a tower', function() {
   it('its health decreases by a given amount', function() {
     let enemy = new QuickEnemy({ x: 1, y: 2 });
-    enemy.hit(20);
-    assert.equal(enemy.health, 60);
+    enemy.hit(3);
+    assert.equal(enemy.health, 10);
   });
 
   it('it dies if health dips to 0', function() {
@@ -55,27 +55,27 @@ describe('quick enemy movement', function() {
     let enemy = new QuickEnemy({ x: 0, y: 0 });
     enemy.move();
 
-    assert.equal(enemy.x, 1.5);
+    assert.equal(enemy.x, 2.3);
   });
 
   it('moves left by value of speed if currentDirection is left', function() {
     let enemy = new QuickEnemy({ x: 1, y: 0 });
     enemy.setDirection('left').move();
 
-    assert.equal(enemy.x, -0.5);
+    assert.equal(Math.round(enemy.x), -1);
   });
 
   it('moves up by value of speed if currentDirection is up', function() {
     let enemy = new QuickEnemy({ x: 0, y: 1 });
     enemy.setDirection('up').move();
 
-    assert.equal(enemy.y, -0.5);
+    assert.equal(Math.round(enemy.y), -1);
   });
 
   it('moves up by value of speed if currentDirection is down', function() {
     let enemy = new QuickEnemy({ x: 0, y: 0 });
     enemy.setDirection('down').move();
 
-    assert.equal(enemy.y, 1.5);
+    assert.equal(enemy.y, 2.3);
   });
 });
