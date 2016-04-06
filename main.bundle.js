@@ -55,14 +55,16 @@
 	'use strict';
 
 	var Game = __webpack_require__(2);
-	var ImageLoader = __webpack_require__(27);
-	var SpriteEngine = __webpack_require__(28);
-	var SimpleTower = __webpack_require__(38);
-	var FlashTower = __webpack_require__(40);
-	var HeavyDamageTower = __webpack_require__(41);
-	var ContinuousFireTower = __webpack_require__(42);
-	var animationEngine = __webpack_require__(43);
-	var $ = __webpack_require__(51);
+	var domManipulator = __webpack_require__(27);
+	var ImageLoader = __webpack_require__(29);
+	var SpriteEngine = __webpack_require__(30);
+	var SimpleTower = __webpack_require__(40);
+	var FlashTower = __webpack_require__(42);
+	var HeavyDamageTower = __webpack_require__(43);
+	var ContinuousFireTower = __webpack_require__(44);
+	var animationEngine = __webpack_require__(45);
+	var CanvManip = __webpack_require__(53);
+	var $ = __webpack_require__(28);
 
 	var game = new Game();
 	var imageLoader = undefined,
@@ -82,14 +84,7 @@
 	var startButton = document.getElementById('start');
 	var fastFowardButton = document.getElementById('ff');
 	var resumeButton = document.getElementById('play');
-	var numberOfLives = document.getElementById('number-of-lives');
-	var moneyAmount = document.getElementById('money-amount');
 
-	var towerButtons = $('.tower-button');
-	var $winScreen = $('#win-screen');
-	var $loseScreen = $('#lose-screen');
-	var $fastFowardButton = $('#fast-foward-button');
-	var $startButton = $('#start-button');
 	var $nextDifficulty = $('#next-difficulty');
 	var $nextLevel = $('#next-level');
 	var $replay = $('#replay');
@@ -118,7 +113,7 @@
 	});
 
 	function eventIsOnCanvas(event) {
-	  var eventPosition = getPosition(event);
+	  var eventPosition = domManipulator.getPosition(event, canvas);
 	  return eventPosition.x >= 0 && eventPosition.x <= 800 && eventPosition.y >= 0 && eventPosition.y <= 500;
 	}
 
@@ -131,172 +126,8 @@
 	  sprites = SpriteEngine.sprites;
 	}
 
-	function drawBoard(ctx) {
-	  var _iteratorNormalCompletion = true;
-	  var _didIteratorError = false;
-	  var _iteratorError = undefined;
-
-	  try {
-	    for (var _iterator = game.board.tiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	      var _step$value = _step.value;
-	      var type = _step$value.type;
-	      var x = _step$value.x;
-	      var y = _step$value.y;
-
-	      ctx.drawImage(images[type], x, y);
-	    }
-	  } catch (err) {
-	    _didIteratorError = true;
-	    _iteratorError = err;
-	  } finally {
-	    try {
-	      if (!_iteratorNormalCompletion && _iterator['return']) {
-	        _iterator['return']();
-	      }
-	    } finally {
-	      if (_didIteratorError) {
-	        throw _iteratorError;
-	      }
-	    }
-	  }
-	}
-
-	function drawEnemies(ctx) {
-	  var _iteratorNormalCompletion2 = true;
-	  var _didIteratorError2 = false;
-	  var _iteratorError2 = undefined;
-
-	  try {
-	    for (var _iterator2 = game.retrieveAliveEnemies()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	      var enemy = _step2.value;
-
-	      ctx.drawImage(sprites[enemy.type].currentFrame, enemy.x, enemy.y);
-	    }
-	  } catch (err) {
-	    _didIteratorError2 = true;
-	    _iteratorError2 = err;
-	  } finally {
-	    try {
-	      if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-	        _iterator2['return']();
-	      }
-	    } finally {
-	      if (_didIteratorError2) {
-	        throw _iteratorError2;
-	      }
-	    }
-	  }
-	}
-
-	function drawAnimations(ctx) {
-	  var _iteratorNormalCompletion3 = true;
-	  var _didIteratorError3 = false;
-	  var _iteratorError3 = undefined;
-
-	  try {
-	    for (var _iterator3 = animationEngine.animations[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	      var animation = _step3.value;
-
-	      routeAnimation(animation, ctx);
-	    }
-	  } catch (err) {
-	    _didIteratorError3 = true;
-	    _iteratorError3 = err;
-	  } finally {
-	    try {
-	      if (!_iteratorNormalCompletion3 && _iterator3['return']) {
-	        _iterator3['return']();
-	      }
-	    } finally {
-	      if (_didIteratorError3) {
-	        throw _iteratorError3;
-	      }
-	    }
-	  }
-	}
-
-	function routeAnimation(a, ctx) {
-	  if (a.nature === 'fire') {
-	    if (a.tower.isFlashTower()) {
-	      ctx.drawImage(a.currentFrame, a.tower.x - a.tower.range / 2, a.tower.y - a.tower.range / 2);
-	    } else {
-	      rotateAndDrawImage(ctx, a);
-	    }
-	  } else if (a.nature === 'hit' && a.enemy) {
-	    if (a.tower.isHeavyDamageTower()) {
-	      ctx.drawImage(a.currentFrame, a.enemy.x - 5, a.enemy.y - 30);
-	    } else {
-	      ctx.drawImage(a.currentFrame, a.enemy.x, a.enemy.y - 11);
-	    }
-	  }
-	}
-
-	function rotateAndDrawImage(ctx, animation) {
-	  var angleInRad = Math.atan2(-(animation.enemy.x + 25 - animation.tower.x), animation.enemy.y + 25 - animation.tower.y);
-	  ctx.translate(animation.tower.x, animation.tower.y);
-	  ctx.rotate(angleInRad);
-	  ctx.drawImage(animation.currentFrame, -25, 25);
-	  ctx.rotate(-angleInRad);
-	  ctx.translate(-animation.tower.x, -animation.tower.y);
-	}
-
-	function drawTowers(ctx) {
-	  var _iteratorNormalCompletion4 = true;
-	  var _didIteratorError4 = false;
-	  var _iteratorError4 = undefined;
-
-	  try {
-	    for (var _iterator4 = game.getTowerTiles()[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-	      var tile = _step4.value;
-
-	      ctx.drawImage(sprites[tile.tower.type].currentFrame, tile.x, tile.y);
-	    }
-	  } catch (err) {
-	    _didIteratorError4 = true;
-	    _iteratorError4 = err;
-	  } finally {
-	    try {
-	      if (!_iteratorNormalCompletion4 && _iterator4['return']) {
-	        _iterator4['return']();
-	      }
-	    } finally {
-	      if (_didIteratorError4) {
-	        throw _iteratorError4;
-	      }
-	    }
-	  }
-	}
-
-	function updateNumberOfLives() {
-	  numberOfLives.innerHTML = game.lives;
-	}
-
-	function updateMoneyAmount() {
-	  moneyAmount.innerHTML = game.monies;
-	}
-
 	function updateAnimations() {
 	  animationEngine.updateAnimations();
-	}
-
-	function getTowerPrice($towerButton) {
-	  return parseInt($towerButton.find('.tower-price').text().substr(1));
-	}
-
-	function updateTowerButtons() {
-	  for (var i = 0; i < towerButtons.length; i++) {
-	    var $towerButton = $(towerButtons[i]);
-	    var towerPrice = getTowerPrice($towerButton);
-	    var towerButtonState = $towerButton.attr('class').split(' ')[1];
-
-	    if (game.canAffordTower(towerPrice) && towerButtonState === 'inactive') {
-	      $towerButton.addClass('active');
-	      $towerButton.removeClass('inactive');
-	    } else if (!game.canAffordTower(towerPrice) && towerButtonState === 'active') {
-	      $towerButton.removeClass('active');
-	      $towerButton.addClass('inactive');
-	    }
-	  }
 	}
 
 	function fireTowers() {
@@ -317,9 +148,9 @@
 
 	function nextTick() {
 	  SpriteEngine.updateSprites();
-	  updateTowerButtons();
+	  domManipulator.updateTowerButtons(game);
 	  game.removeEnemiesOffRight();
-	  updateNumberOfLives();
+	  domManipulator.updateNumberOfLives(game);
 	  game.redirectEnemies();
 	  game.retrieveAliveEnemies().forEach(function (enemy) {
 	    return enemy.move();
@@ -327,7 +158,7 @@
 	  fireTowers();
 	  updateAnimations();
 	  game.rewardMonies();
-	  updateMoneyAmount();
+	  domManipulator.updateMoneyAmount(game);
 	}
 
 	// Start game loop - before enemies are called
@@ -336,34 +167,35 @@
 
 	function startLoop() {
 	  ctx.clearRect(0, 0, canvas.width, canvas.height);
-	  updateTowerButtons();
-	  updateNumberOfLives();
-	  updateMoneyAmount();
-	  drawBoard(ctx);
-	  drawTowers(ctx);
+
+	  domManipulator.updateTowerButtons(game);
+	  domManipulator.updateNumberOfLives(game);
+	  domManipulator.updateMoneyAmount(game);
+	  CanvManip.drawBoard(ctx, game, images);
+	  CanvManip.drawTowers(ctx, game, sprites);
 	  if (mouseDown) {
-	    drawTowerRange(ctx);
+	    CanvManip.drawTowerRange(ctx, game);
 	  }
 	  if (mouseEnter) {
-	    simulateTowerRange(ctx);
+	    CanvManip.simulateTowerRange(ctx, game, hoverTower);
 	  }
 	  if (gameNotStarted) {
 	    requestAnimationFrame(startLoop);
 	  }
 	}
 
-	//  Main game loop
+	//Main game loop
 	function gameLoop() {
 	  ctx.clearRect(0, 0, canvas.width, canvas.height);
-	  drawBoard(ctx);
-	  drawEnemies(ctx);
-	  drawTowers(ctx);
-	  drawAnimations(ctx);
+	  CanvManip.drawBoard(ctx, game, images);
+	  CanvManip.drawEnemies(ctx, game, sprites);
+	  CanvManip.drawTowers(ctx, game, sprites);
+	  CanvManip.drawAnimations(ctx, animationEngine);
 	  if (mouseDown) {
-	    drawTowerRange(ctx);
+	    CanvManip.drawTowerRange(ctx, game);
 	  }
 	  if (mouseEnter) {
-	    simulateTowerRange(ctx);
+	    CanvManip.simulateTowerRange(ctx, game, hoverTower);
 	  }
 	  nextTick();
 
@@ -378,54 +210,19 @@
 
 	function gameLose() {
 	  ctx.clearRect(0, 0, canvas.width, canvas.height);
-	  $(canvas).hide();
-	  $fastFowardButton.hide();
-	  $loseScreen.show();
+	  domManipulator.displayLoseScreen(game, canvas);
 	}
 
 	function gameWin() {
 	  ctx.clearRect(0, 0, canvas.width, canvas.height);
-	  $(canvas).hide();
-	  $fastFowardButton.hide();
-	  $winScreen.show();
-	  showStars();
-
-	  if (game.currentLevel.difficulty === 3) {
-	    $nextDifficulty.hide();
-	  } else {
-	    $nextDifficulty.show();
-	  }
-	}
-
-	function showStars() {
-	  var stars = game.determineNumberOfStars();
-	  for (var i = 1; i <= stars; i++) {
-	    $('#star-' + i).show();
-	  }
-	}
-
-	function hideAllStars() {
-	  for (var i = 1; i <= 3; i++) {
-	    $('#star-' + i).hide();
-	  }
-	}
-
-	function getPosition(event) {
-	  return {
-	    x: event.pageX - canvas.offsetLeft,
-	    y: event.pageY - canvas.offsetTop
-	  };
+	  domManipulator.displayWinScreen(game, canvas);
 	}
 
 	function selectTile(event) {
-	  var clickPosition = getPosition(event);
+	  var clickPosition = domManipulator.getPosition(event, canvas);
 	  game.board.setCurrentTile(clickPosition.x, clickPosition.y);
 	  game.board.updateTileTypes();
-	  if (game.board.currentTileIsASelectedBuildTile()) {
-	    $('#sell-button').show();
-	  } else {
-	    $('#sell-button').hide();
-	  }
+	  domManipulator.sellButtonDisplay(game);
 	}
 
 	function createTowerType(id) {
@@ -452,59 +249,26 @@
 	  }
 	}
 
-	function drawTowerRange(ctx) {
-	  if (game.board.currentTileIsABuildTile() && game.board.currentTile.hasTower()) {
-	    ctx.beginPath();
-	    ctx.arc(game.board.currentTile.centerX(), game.board.currentTile.centerY(), game.board.currentTile.tower.range, 0, 2 * Math.PI, false);
-	    ctx.stroke();
-	  }
-	}
-
-	function simulateTowerRange(ctx) {
-	  if (game.board.currentTileIsAHighlightedBuildTile()) {
-	    ctx.beginPath();
-	    ctx.arc(game.board.currentTile.centerX(), game.board.currentTile.centerY(), hoverTower.range, 0, 2 * Math.PI, false);
-	    ctx.stroke();
-	  }
-	}
-
 	function moveToNextLevel() {
-	  resetScreen();
+	  domManipulator.resetScreen(game, canvas);
+	  gameNotStarted = true;
 	  game.loadNextLevel();
 	  loadImages();
 	  requestAnimationFrame(startLoop);
 	}
 
 	function moveToNextDifficulty() {
-	  resetScreen();
+	  domManipulator.resetScreen(game, canvas);
+	  gameNotStarted = true;
 	  game.loadNextDifficulty();
 	  requestAnimationFrame(startLoop);
 	}
 
 	function resetLevel() {
-	  resetScreen();
+	  domManipulator.resetScreen(game, canvas);
+	  gameNotStarted = true;
 	  game.resetLevel();
 	  requestAnimationFrame(startLoop);
-	}
-
-	function resetScreen() {
-	  hideAllStars();
-	  $winScreen.hide();
-	  $loseScreen.hide();
-	  $(canvas).show();
-	  gameNotStarted = true;
-	  game.resetClickedTiles();
-	  resetButtons();
-	}
-
-	function replaceStartButtonWithFastFoward() {
-	  $startButton.hide();
-	  $fastFowardButton.show();
-	}
-
-	function resetButtons() {
-	  $startButton.show();
-	  $fastFowardButton.hide();
 	}
 
 	canvas.addEventListener("mousedown", selectTile);
@@ -515,7 +279,7 @@
 	continuousFireTowerButton.addEventListener("click", assignOrSelectTower);
 	startButton.addEventListener("click", function () {
 	  gameNotStarted = false;
-	  replaceStartButtonWithFastFoward();
+	  domManipulator.replaceStartButtonWithFastFoward();
 	  requestAnimationFrame(gameLoop);
 	});
 
@@ -13936,807 +13700,122 @@
 
 /***/ },
 /* 27 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ImageLoader = function ImageLoader() {
-	  this.images = {
-	    grassTile: new Image(),
-	    pathTile: new Image(),
-	    buildTile: new Image(),
-	    buildTileHighlighted: new Image(),
-	    buildTileSelected: new Image(),
-	    simpleEnemy: new Image(),
-	    simpleTower: new Image(),
-	    flashTower: new Image(),
-	    heavyDamageTower: new Image(),
-	    continuousFireTower: new Image(),
-	    buildSiteSelect: new Image()
-	  };
+	var $ = __webpack_require__(28);
+
+	var towerButtons = $('.tower-button');
+	var $numberOfLives = $('#number-of-lives');
+	var $moneyAmount = $('#money-amount');
+	var $sellButton = $('#sell-button');
+	var $winScreen = $('#win-screen');
+	var $loseScreen = $('#lose-screen');
+	var $fastFowardButton = $('#fast-foward-button');
+	var $startButton = $('#start-button');
+	var $nextDifficulty = $('#next-difficulty');
+
+	var domManipulator = {
+	  getTowerPrice: function getTowerPrice(button) {
+	    return parseInt(button.find('.tower-price').text().substr(1));
+	  },
+
+	  updateTowerButtons: function updateTowerButtons(game) {
+	    for (var i = 0; i < towerButtons.length; i++) {
+	      var $towerButton = $(towerButtons[i]);
+	      var towerPrice = this.getTowerPrice($towerButton);
+	      var towerButtonState = $towerButton.attr('class').split(' ')[1];
+
+	      if (game.canAffordTower(towerPrice) && towerButtonState === 'inactive') {
+	        $towerButton.addClass('active');
+	        $towerButton.removeClass('inactive');
+	      } else if (!game.canAffordTower(towerPrice) && towerButtonState === 'active') {
+	        $towerButton.removeClass('active');
+	        $towerButton.addClass('inactive');
+	      }
+	    }
+	  },
+
+	  updateNumberOfLives: function updateNumberOfLives(game) {
+	    $numberOfLives.text(game.lives);
+	  },
+
+	  updateMoneyAmount: function updateMoneyAmount(game) {
+	    $moneyAmount.text(game.monies);
+	  },
+
+	  sellButtonDisplay: function sellButtonDisplay(game) {
+	    if (game.board.currentTileIsASelectedBuildTile()) {
+	      $sellButton.show();
+	    } else {
+	      $sellButton.hide();
+	    }
+	  },
+
+	  displayWinScreen: function displayWinScreen(game, canvas) {
+	    $(canvas).hide();
+	    $fastFowardButton.hide();
+	    $winScreen.show();
+	    this.showStars(game);
+
+	    if (game.currentLevel.difficulty === 3) {
+	      $nextDifficulty.hide();
+	    } else {
+	      $nextDifficulty.show();
+	    }
+	  },
+
+	  showStars: function showStars(game) {
+	    var stars = game.determineNumberOfStars();
+	    for (var i = 1; i <= stars; i++) {
+	      $('#star-' + i).show();
+	    }
+	  },
+
+	  displayLoseScreen: function displayLoseScreen(game, canvas) {
+	    $(canvas).hide();
+	    $fastFowardButton.hide();
+	    $loseScreen.show();
+	  },
+
+	  resetScreen: function resetScreen(game, canvas) {
+	    this.hideAllStars();
+	    $winScreen.hide();
+	    $loseScreen.hide();
+	    $(canvas).show();
+	    game.resetClickedTiles();
+	    this.resetButtons();
+	  },
+
+	  resetButtons: function resetButtons() {
+	    $startButton.show();
+	    $fastFowardButton.hide();
+	  },
+
+	  hideAllStars: function hideAllStars() {
+	    for (var i = 1; i <= 3; i++) {
+	      $('#star-' + i).hide();
+	    }
+	  },
+
+	  getPosition: function getPosition(event, canvas) {
+	    return {
+	      x: event.pageX - canvas.offsetLeft,
+	      y: event.pageY - canvas.offsetTop
+	    };
+	  },
+
+	  replaceStartButtonWithFastFoward: function replaceStartButtonWithFastFoward() {
+	    $startButton.hide();
+	    $fastFowardButton.show();
+	  }
 	};
 
-	var pathSprites = {
-	  1: 'sprites/dirt-tile.png',
-	  2: 'sprites/path.png',
-	  3: 'sprites/dirt-tile.png',
-	  4: 'sprites/path.png'
-	};
-
-	var grassSprites = {
-	  1: 'sprites/pixel-grass.jpg',
-	  2: 'sprites/desert-tiles.png',
-	  3: 'sprites/pixel-grass.jpg',
-	  4: 'sprites/desert-tiles.png'
-	};
-
-	ImageLoader.prototype.init = function (level) {
-	  this.images.grassTile.src = grassSprites[level];
-	  this.images.pathTile.src = pathSprites[level];
-	  this.images.buildTile.src = 'sprites/red-brick.png';
-	  this.images.buildTileHighlighted.src = 'sprites/red-brick-highlight.png';
-	  this.images.buildTileSelected.src = 'sprites/red-brick-selected.png';
-	  this.images.simpleEnemy.src = 'sprites/orange.gif';
-	  this.images.simpleTower.src = 'sprites/super-tower-2.png';
-	  this.images.flashTower.src = 'sprites/whale-tower.gif';
-	  this.images.heavyDamageTower.src = 'sprites/panda.gif';
-	  this.images.continuousFireTower.src = 'sprites/bunny.gif';
-
-	  return this.images;
-	};
-
-	module.exports = ImageLoader;
+	module.exports = domManipulator;
 
 /***/ },
 /* 28 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Sprite = __webpack_require__(29);
-
-	var SpriteEngine = {
-	  updateSprites: function updateSprites() {
-	    for (var key in this.sprites) {
-	      this.sprites[key].setCurrentSpriteFrame();
-	    }
-	  },
-	  sprites: {
-	    quickEnemy: new Sprite('quickEnemy'),
-	    simpleEnemy: new Sprite('simpleEnemy'),
-	    monsterEnemy: new Sprite('monsterEnemy'),
-	    toastEnemy: new Sprite('toastEnemy'),
-	    simpleTower: new Sprite('simpleTower'),
-	    continuousFireTower: new Sprite('continuousFireTower'),
-	    heavyDamageTower: new Sprite('heavyDamageTower'),
-	    flashTower: new Sprite('flashTower')
-	  }
-	};
-
-	module.exports = SpriteEngine;
-
-/***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var lodash = __webpack_require__(3);
-	var SimpleEnemySprite = __webpack_require__(30);
-	var QuickEnemySprite = __webpack_require__(31);
-	var MonsterEnemySprite = __webpack_require__(32);
-	var ToastEnemySprite = __webpack_require__(33);
-	var SimpleTowerSprite = __webpack_require__(34);
-	var ContinuousFireTowerSprite = __webpack_require__(35);
-	var HeavyDamageTowerSprite = __webpack_require__(36);
-	var FlashTowerSprite = __webpack_require__(37);
-
-	var Sprite = function Sprite(type) {
-	  this.frameIndex = 1;
-	  this.createSpriteFrames(type);
-	  this.currentFrame = this.frames[1];
-	};
-
-	Sprite.prototype.createSpriteFrames = function (type) {
-	  var sprite = getSprite(type);
-	  this.frames = sprite.frames;
-	  this.setImageSource(this.frames, sprite.source);
-	};
-
-	function getSprite(type) {
-	  switch (type) {
-	    case 'quickEnemy':
-	      return new QuickEnemySprite();
-	    case 'simpleEnemy':
-	      return new SimpleEnemySprite();
-	    case 'monsterEnemy':
-	      return new MonsterEnemySprite();
-	    case 'toastEnemy':
-	      return new ToastEnemySprite();
-	    case 'simpleTower':
-	      return new SimpleTowerSprite();
-	    case 'continuousFireTower':
-	      return new ContinuousFireTowerSprite();
-	    case 'heavyDamageTower':
-	      return new HeavyDamageTowerSprite();
-	    case 'flashTower':
-	      return new FlashTowerSprite();
-	  }
-	}
-
-	Sprite.prototype.setImageSource = function (frames, imageLocation) {
-	  for (var i = 1; i <= lodash.size(frames); i++) {
-	    frames[i].src = '' + imageLocation + i + '.png';
-	  }
-	};
-
-	Sprite.prototype.setCurrentSpriteFrame = function () {
-	  this.frameIndex += 1;
-	  //1. divides framerate by 3 and rounds to slow animation.
-	  //2. modulos by number of frames so that animation loops.
-	  //3. adds 1 frame so that 0 called on keys is not undefined.
-	  this.currentFrame = this.frames[Math.round(this.frameIndex / 3) % Object.keys(this.frames).length + 1];
-	};
-
-	module.exports = Sprite;
-
-/***/ },
-/* 30 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var SimpleEnemySprite = function SimpleEnemySprite() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image()
-	  };
-	  this.source = 'sprites/burger-frames/burger';
-	};
-
-	module.exports = SimpleEnemySprite;
-
-/***/ },
-/* 31 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var QuickEnemySprite = function QuickEnemySprite() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image()
-	  };
-	  this.source = 'sprites/pizza-frames/pizza';
-	};
-
-	module.exports = QuickEnemySprite;
-
-/***/ },
-/* 32 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var MonsterEnemySprite = function MonsterEnemySprite() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image()
-	  };
-	  this.source = 'sprites/goo-monster-frames/goo-monster';
-	};
-
-	module.exports = MonsterEnemySprite;
-
-/***/ },
-/* 33 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var ToastEnemySprite = function ToastEnemySprite() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image(),
-	    10: new Image(),
-	    11: new Image(),
-	    12: new Image(),
-	    13: new Image(),
-	    14: new Image()
-	  };
-	  this.source = 'sprites/toast-frames/toast';
-	};
-
-	module.exports = ToastEnemySprite;
-
-/***/ },
-/* 34 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var SimpleEnemySprite = function SimpleEnemySprite() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image(),
-	    10: new Image(),
-	    11: new Image(),
-	    12: new Image()
-	  };
-	  this.source = 'sprites/simple-tower-frames/nyan-cat';
-	};
-
-	module.exports = SimpleEnemySprite;
-
-/***/ },
-/* 35 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var ContinuousFireTowerSprite = function ContinuousFireTowerSprite() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image(),
-	    10: new Image()
-	  };
-	  this.source = 'sprites/bunny-frames/bunny';
-	};
-
-	module.exports = ContinuousFireTowerSprite;
-
-/***/ },
-/* 36 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var HeavyDamageTowerSprite = function HeavyDamageTowerSprite() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image(),
-	    10: new Image(),
-	    11: new Image(),
-	    12: new Image(),
-	    13: new Image(),
-	    14: new Image(),
-	    15: new Image(),
-	    16: new Image()
-	  };
-	  this.source = 'sprites/panda-frames/panda';
-	};
-
-	module.exports = HeavyDamageTowerSprite;
-
-/***/ },
-/* 37 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var FlashTowerSprite = function FlashTowerSprite() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image(),
-	    10: new Image(),
-	    11: new Image(),
-	    12: new Image()
-	  };
-	  this.source = 'sprites/dog-frames/dog';
-	};
-
-	module.exports = FlashTowerSprite;
-
-/***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Tower = __webpack_require__(39);
-
-	function SimpleTower(coord) {
-	  this.x = coord.x;
-	  this.y = coord.y;
-	  this.damage = 25;
-	  this.range = 110;
-	  this.fireRateRef = 1250;
-	  this.fireRate = 1250;
-	  this.timeSinceLastShot = new Date().getTime() - this.fireRate;
-	  this.price = 125;
-	  this.type = 'simpleTower';
-	}
-
-	SimpleTower.prototype = Object.create(Tower.prototype);
-
-	SimpleTower.prototype.constructor = SimpleTower;
-
-	module.exports = SimpleTower;
-
-/***/ },
-/* 39 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	function Tower(coord) {
-	  this.x = coord.x;
-	  this.y = coord.y;
-	}
-
-	Tower.prototype.canShoot = function (currentTime) {
-	  var timeElapsed = currentTime - this.timeSinceLastShot;
-	  return timeElapsed >= this.fireRate;
-	};
-
-	Tower.prototype.shoot = function (enemies) {
-	  var currentTime = new Date().getTime();
-	  var enemyToShoot = this.selectEnemyToShoot(enemies);
-
-	  if (this.canShoot(currentTime) && enemyToShoot && enemyToShoot.active) {
-	    enemyToShoot.hit(this.damage);
-	    this.timeSinceLastShot = currentTime;
-	    return { enemy: enemyToShoot, tower: this };
-	  }
-	};
-
-	Tower.prototype.selectEnemyToShoot = function (enemies) {
-	  return this.enemiesWithinRange(enemies)[0];
-	};
-
-	Tower.prototype.inRange = function (enemy) {
-	  var dx = enemy.x + 25 - this.x;
-	  var dy = enemy.y + 25 - this.y;
-	  return Math.pow(dx, 2) + Math.pow(dy, 2) <= Math.pow(this.range, 2);
-	};
-
-	Tower.prototype.enemiesWithinRange = function (enemies) {
-	  return enemies.filter((function (enemy) {
-	    return this.inRange(enemy);
-	  }).bind(this));
-	};
-
-	Tower.prototype.isSimpleTower = function () {
-	  return this.type === 'simpleTower';
-	};
-
-	Tower.prototype.isFlashTower = function () {
-	  return this.type === 'flashTower';
-	};
-
-	Tower.prototype.isHeavyDamageTower = function () {
-	  return this.type === 'heavyDamageTower';
-	};
-
-	Tower.prototype.isContinuousFireTower = function () {
-	  return this.type === 'continuousFireTower';
-	};
-
-	module.exports = Tower;
-
-/***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Tower = __webpack_require__(39);
-
-	function FlashTower(coord) {
-	  Tower.call(this, coord);
-	  this.damage = 5;
-	  this.range = 160;
-	  this.fireRateRef = 1600;
-	  this.fireRate = 1600;
-	  this.timeSinceLastShot = new Date().getTime() - this.fireRate;
-	  this.price = 200;
-	  this.type = 'flashTower';
-	}
-
-	FlashTower.prototype = Object.create(Tower.prototype);
-
-	FlashTower.prototype.constructor = FlashTower;
-
-	FlashTower.prototype.shoot = function (enemies) {
-	  var currentTime = new Date().getTime();
-	  var enemiesToShoot = this.enemiesWithinRange(enemies);
-
-	  if (this.canShoot(currentTime) && enemiesToShoot.length > 0) {
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-
-	    try {
-	      for (var _iterator = enemiesToShoot[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	        var enemy = _step.value;
-	        enemy.hit(this.damage);
-	      }
-	    } catch (err) {
-	      _didIteratorError = true;
-	      _iteratorError = err;
-	    } finally {
-	      try {
-	        if (!_iteratorNormalCompletion && _iterator['return']) {
-	          _iterator['return']();
-	        }
-	      } finally {
-	        if (_didIteratorError) {
-	          throw _iteratorError;
-	        }
-	      }
-	    }
-
-	    this.timeSinceLastShot = currentTime;
-	    return { enemy: null, tower: this };
-	  }
-	};
-
-	module.exports = FlashTower;
-
-/***/ },
-/* 41 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Tower = __webpack_require__(39);
-
-	function HeavyDamageTower(coord) {
-	  Tower.call(this, coord);
-	  this.damage = 50;
-	  this.range = 150;
-	  this.fireRateRef = 2500;
-	  this.fireRate = 2500;
-	  this.timeSinceLastShot = new Date().getTime() - this.fireRate;
-	  this.price = 175;
-	  this.type = 'heavyDamageTower';
-	}
-
-	HeavyDamageTower.prototype = Object.create(Tower.prototype);
-
-	HeavyDamageTower.prototype.constructor = HeavyDamageTower;
-
-	module.exports = HeavyDamageTower;
-
-/***/ },
-/* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Tower = __webpack_require__(39);
-
-	function ContinuousFireTower(coord) {
-	  Tower.call(this, coord);
-	  this.damage = 5;
-	  this.range = 90;
-	  this.fireRateRef = 200;
-	  this.fireRate = 200;
-	  this.timeSinceLastShot = new Date().getTime() - this.fireRate;
-	  this.price = 150;
-	  this.type = 'continuousFireTower';
-	}
-
-	ContinuousFireTower.prototype = Object.create(Tower.prototype);
-
-	ContinuousFireTower.prototype.constructor = ContinuousFireTower;
-
-	module.exports = ContinuousFireTower;
-
-/***/ },
-/* 43 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Animation = __webpack_require__(44);
-
-	var AnimationEngine = {
-	  animations: [],
-	  updateAnimations: function updateAnimations() {
-	    this.animations.forEach(function (animation) {
-	      return animation.setCurrentAnimationFrame();
-	    });
-	    this.animations = this.animations.filter(function (animation) {
-	      return animation.active;
-	    });
-	  },
-	  triggerAnimation: function triggerAnimation(shotEvent) {
-	    this.animations.push(new Animation(shotEvent, 'fire'));
-	    this.animations.push(new Animation(shotEvent, 'hit'));
-	  }
-	};
-
-	module.exports = AnimationEngine;
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var SimpleTowerAnimation = __webpack_require__(45);
-	var FlashTowerAnimation = __webpack_require__(46);
-	var ContinuousFireTowerAnimation = __webpack_require__(47);
-	var EnemyHitAnimation = __webpack_require__(48);
-	var EnemyHitMediumAnimation = __webpack_require__(49);
-	var EnemyHitRainbowAnimation = __webpack_require__(50);
-
-	var lodash = __webpack_require__(3);
-
-	var Animation = function Animation(shotEvent, nature) {
-	  this.tower = shotEvent.tower;
-	  this.enemy = shotEvent.enemy;
-	  this.active = true;
-	  this.frameIndex = 0;
-	  this.nature = nature;
-	  this.createAnimationFrames(shotEvent.tower.type);
-	};
-
-	Animation.prototype.createAnimationFrames = function (type) {
-	  var animation = getAnimation(type, this.nature);
-	  this.frames = animation.frames;
-	  this.setImageSource(this.frames, animation.source);
-	};
-
-	Animation.prototype.setImageSource = function (frames, imageLocation) {
-	  for (var i = 1; i <= lodash.size(frames); i++) {
-	    frames[i].src = '' + imageLocation + i + '.png';
-	  }
-	};
-
-	Animation.prototype.setCurrentAnimationFrame = function () {
-	  this.frameIndex += 1;
-	  if (this.frameIndex + 1 < Object.keys(this.frames).length) {
-	    this.setCurrentFrame();
-	  } else {
-	    this.active = false;
-	  }
-	};
-
-	Animation.prototype.setCurrentFrame = function () {
-	  this.currentFrame = this.frames[Math.round(this.frameIndex) % Object.keys(this.frames).length + 1];
-	  this.active = true;
-	};
-
-	function getAnimation(type, nature) {
-	  if (nature === 'fire') {
-	    switch (type) {
-	      case 'simpleTower':
-	        return new SimpleTowerAnimation();
-	      case 'flashTower':
-	        return new FlashTowerAnimation();
-	      case 'continuousFireTower':
-	        return new SimpleTowerAnimation();
-	      case 'heavyDamageTower':
-	        return new SimpleTowerAnimation();
-	    }
-	  } else if (nature === 'hit') {
-	    switch (type) {
-	      case 'simpleTower':
-	        return new EnemyHitRainbowAnimation();
-	      case 'flashTower':
-	        return new EnemyHitAnimation();
-	      case 'continuousFireTower':
-	        return new EnemyHitAnimation();
-	      case 'heavyDamageTower':
-	        return new EnemyHitMediumAnimation();
-	    }
-	  }
-	}
-
-	module.exports = Animation;
-
-/***/ },
-/* 45 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var SimpleEnemyFire = function SimpleEnemyFire() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image(),
-	    10: new Image(),
-	    11: new Image(),
-	    12: new Image()
-	  };
-	  this.source = 'sprites/tower-fire/fire-explosion';
-	};
-
-	module.exports = SimpleEnemyFire;
-
-/***/ },
-/* 46 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var FlashTower = function FlashTower() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image(),
-	    10: new Image()
-	  };
-	  this.source = 'sprites/circles-hit/circles';
-	};
-
-	module.exports = FlashTower;
-
-/***/ },
-/* 47 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var ContinuousTowerFire = function ContinuousTowerFire() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image(),
-	    10: new Image(),
-	    11: new Image(),
-	    12: new Image()
-	  };
-	  this.source = 'sprites/laser-beam/laser-beam';
-	};
-
-	module.exports = ContinuousTowerFire;
-
-/***/ },
-/* 48 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var EnemyHitAnimation = function EnemyHitAnimation() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image()
-	  };
-	  this.source = 'sprites/enemy-hit/explosion-hit';
-	};
-
-	module.exports = EnemyHitAnimation;
-
-/***/ },
-/* 49 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var EnemyHitMediumAnimation = function EnemyHitMediumAnimation() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image(),
-	    10: new Image(),
-	    11: new Image(),
-	    12: new Image(),
-	    13: new Image(),
-	    14: new Image(),
-	    15: new Image()
-	  };
-	  this.source = 'sprites/medium-explosion/medium-explosion';
-	};
-
-	module.exports = EnemyHitMediumAnimation;
-
-/***/ },
-/* 50 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var EnemyHitRainbowAnimation = function EnemyHitRainbowAnimation() {
-	  this.frames = {
-	    1: new Image(),
-	    2: new Image(),
-	    3: new Image(),
-	    4: new Image(),
-	    5: new Image(),
-	    6: new Image(),
-	    7: new Image(),
-	    8: new Image(),
-	    9: new Image(),
-	    10: new Image(),
-	    11: new Image(),
-	    12: new Image()
-	  };
-	  this.source = 'sprites/rainbow-explosion/rainbow';
-	};
-
-	module.exports = EnemyHitRainbowAnimation;
-
-/***/ },
-/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -24582,6 +23661,970 @@
 	return jQuery;
 	}));
 
+
+/***/ },
+/* 29 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var ImageLoader = function ImageLoader() {
+	  this.images = {
+	    grassTile: new Image(),
+	    pathTile: new Image(),
+	    buildTile: new Image(),
+	    buildTileHighlighted: new Image(),
+	    buildTileSelected: new Image(),
+	    simpleEnemy: new Image(),
+	    simpleTower: new Image(),
+	    flashTower: new Image(),
+	    heavyDamageTower: new Image(),
+	    continuousFireTower: new Image(),
+	    buildSiteSelect: new Image()
+	  };
+	};
+
+	var pathSprites = {
+	  1: 'sprites/dirt-tile.png',
+	  2: 'sprites/path.png',
+	  3: 'sprites/dirt-tile.png',
+	  4: 'sprites/path.png'
+	};
+
+	var grassSprites = {
+	  1: 'sprites/pixel-grass.jpg',
+	  2: 'sprites/desert-tiles.png',
+	  3: 'sprites/pixel-grass.jpg',
+	  4: 'sprites/desert-tiles.png'
+	};
+
+	ImageLoader.prototype.init = function (level) {
+	  this.images.grassTile.src = grassSprites[level];
+	  this.images.pathTile.src = pathSprites[level];
+	  this.images.buildTile.src = 'sprites/red-brick.png';
+	  this.images.buildTileHighlighted.src = 'sprites/red-brick-highlight.png';
+	  this.images.buildTileSelected.src = 'sprites/red-brick-selected.png';
+	  this.images.simpleEnemy.src = 'sprites/orange.gif';
+	  this.images.simpleTower.src = 'sprites/super-tower-2.png';
+	  this.images.flashTower.src = 'sprites/whale-tower.gif';
+	  this.images.heavyDamageTower.src = 'sprites/panda.gif';
+	  this.images.continuousFireTower.src = 'sprites/bunny.gif';
+
+	  return this.images;
+	};
+
+	module.exports = ImageLoader;
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Sprite = __webpack_require__(31);
+
+	var SpriteEngine = {
+	  updateSprites: function updateSprites() {
+	    for (var key in this.sprites) {
+	      this.sprites[key].setCurrentSpriteFrame();
+	    }
+	  },
+	  sprites: {
+	    quickEnemy: new Sprite('quickEnemy'),
+	    simpleEnemy: new Sprite('simpleEnemy'),
+	    monsterEnemy: new Sprite('monsterEnemy'),
+	    toastEnemy: new Sprite('toastEnemy'),
+	    simpleTower: new Sprite('simpleTower'),
+	    continuousFireTower: new Sprite('continuousFireTower'),
+	    heavyDamageTower: new Sprite('heavyDamageTower'),
+	    flashTower: new Sprite('flashTower')
+	  }
+	};
+
+	module.exports = SpriteEngine;
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var lodash = __webpack_require__(3);
+	var SimpleEnemySprite = __webpack_require__(32);
+	var QuickEnemySprite = __webpack_require__(33);
+	var MonsterEnemySprite = __webpack_require__(34);
+	var ToastEnemySprite = __webpack_require__(35);
+	var SimpleTowerSprite = __webpack_require__(36);
+	var ContinuousFireTowerSprite = __webpack_require__(37);
+	var HeavyDamageTowerSprite = __webpack_require__(38);
+	var FlashTowerSprite = __webpack_require__(39);
+
+	var Sprite = function Sprite(type) {
+	  this.frameIndex = 1;
+	  this.createSpriteFrames(type);
+	  this.currentFrame = this.frames[1];
+	};
+
+	Sprite.prototype.createSpriteFrames = function (type) {
+	  var sprite = getSprite(type);
+	  this.frames = sprite.frames;
+	  this.setImageSource(this.frames, sprite.source);
+	};
+
+	function getSprite(type) {
+	  switch (type) {
+	    case 'quickEnemy':
+	      return new QuickEnemySprite();
+	    case 'simpleEnemy':
+	      return new SimpleEnemySprite();
+	    case 'monsterEnemy':
+	      return new MonsterEnemySprite();
+	    case 'toastEnemy':
+	      return new ToastEnemySprite();
+	    case 'simpleTower':
+	      return new SimpleTowerSprite();
+	    case 'continuousFireTower':
+	      return new ContinuousFireTowerSprite();
+	    case 'heavyDamageTower':
+	      return new HeavyDamageTowerSprite();
+	    case 'flashTower':
+	      return new FlashTowerSprite();
+	  }
+	}
+
+	Sprite.prototype.setImageSource = function (frames, imageLocation) {
+	  for (var i = 1; i <= lodash.size(frames); i++) {
+	    frames[i].src = '' + imageLocation + i + '.png';
+	  }
+	};
+
+	Sprite.prototype.setCurrentSpriteFrame = function () {
+	  this.frameIndex += 1;
+	  //1. divides framerate by 3 and rounds to slow animation.
+	  //2. modulos by number of frames so that animation loops.
+	  //3. adds 1 frame so that 0 called on keys is not undefined.
+	  this.currentFrame = this.frames[Math.round(this.frameIndex / 3) % Object.keys(this.frames).length + 1];
+	};
+
+	module.exports = Sprite;
+
+/***/ },
+/* 32 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var SimpleEnemySprite = function SimpleEnemySprite() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image()
+	  };
+	  this.source = 'sprites/burger-frames/burger';
+	};
+
+	module.exports = SimpleEnemySprite;
+
+/***/ },
+/* 33 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var QuickEnemySprite = function QuickEnemySprite() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image()
+	  };
+	  this.source = 'sprites/pizza-frames/pizza';
+	};
+
+	module.exports = QuickEnemySprite;
+
+/***/ },
+/* 34 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var MonsterEnemySprite = function MonsterEnemySprite() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image()
+	  };
+	  this.source = 'sprites/goo-monster-frames/goo-monster';
+	};
+
+	module.exports = MonsterEnemySprite;
+
+/***/ },
+/* 35 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var ToastEnemySprite = function ToastEnemySprite() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image(),
+	    10: new Image(),
+	    11: new Image(),
+	    12: new Image(),
+	    13: new Image(),
+	    14: new Image()
+	  };
+	  this.source = 'sprites/toast-frames/toast';
+	};
+
+	module.exports = ToastEnemySprite;
+
+/***/ },
+/* 36 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var SimpleEnemySprite = function SimpleEnemySprite() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image(),
+	    10: new Image(),
+	    11: new Image(),
+	    12: new Image()
+	  };
+	  this.source = 'sprites/simple-tower-frames/nyan-cat';
+	};
+
+	module.exports = SimpleEnemySprite;
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var ContinuousFireTowerSprite = function ContinuousFireTowerSprite() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image(),
+	    10: new Image()
+	  };
+	  this.source = 'sprites/bunny-frames/bunny';
+	};
+
+	module.exports = ContinuousFireTowerSprite;
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var HeavyDamageTowerSprite = function HeavyDamageTowerSprite() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image(),
+	    10: new Image(),
+	    11: new Image(),
+	    12: new Image(),
+	    13: new Image(),
+	    14: new Image(),
+	    15: new Image(),
+	    16: new Image()
+	  };
+	  this.source = 'sprites/panda-frames/panda';
+	};
+
+	module.exports = HeavyDamageTowerSprite;
+
+/***/ },
+/* 39 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var FlashTowerSprite = function FlashTowerSprite() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image(),
+	    10: new Image(),
+	    11: new Image(),
+	    12: new Image()
+	  };
+	  this.source = 'sprites/dog-frames/dog';
+	};
+
+	module.exports = FlashTowerSprite;
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Tower = __webpack_require__(41);
+
+	function SimpleTower(coord) {
+	  this.x = coord.x;
+	  this.y = coord.y;
+	  this.damage = 25;
+	  this.range = 110;
+	  this.fireRateRef = 1250;
+	  this.fireRate = 1250;
+	  this.timeSinceLastShot = new Date().getTime() - this.fireRate;
+	  this.price = 125;
+	  this.type = 'simpleTower';
+	}
+
+	SimpleTower.prototype = Object.create(Tower.prototype);
+
+	SimpleTower.prototype.constructor = SimpleTower;
+
+	module.exports = SimpleTower;
+
+/***/ },
+/* 41 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	function Tower(coord) {
+	  this.x = coord.x;
+	  this.y = coord.y;
+	}
+
+	Tower.prototype.canShoot = function (currentTime) {
+	  var timeElapsed = currentTime - this.timeSinceLastShot;
+	  return timeElapsed >= this.fireRate;
+	};
+
+	Tower.prototype.shoot = function (enemies) {
+	  var currentTime = new Date().getTime();
+	  var enemyToShoot = this.selectEnemyToShoot(enemies);
+
+	  if (this.canShoot(currentTime) && enemyToShoot && enemyToShoot.active) {
+	    enemyToShoot.hit(this.damage);
+	    this.timeSinceLastShot = currentTime;
+	    return { enemy: enemyToShoot, tower: this };
+	  }
+	};
+
+	Tower.prototype.selectEnemyToShoot = function (enemies) {
+	  return this.enemiesWithinRange(enemies)[0];
+	};
+
+	Tower.prototype.inRange = function (enemy) {
+	  var dx = enemy.x + 25 - this.x;
+	  var dy = enemy.y + 25 - this.y;
+	  return Math.pow(dx, 2) + Math.pow(dy, 2) <= Math.pow(this.range, 2);
+	};
+
+	Tower.prototype.enemiesWithinRange = function (enemies) {
+	  return enemies.filter((function (enemy) {
+	    return this.inRange(enemy);
+	  }).bind(this));
+	};
+
+	Tower.prototype.isSimpleTower = function () {
+	  return this.type === 'simpleTower';
+	};
+
+	Tower.prototype.isFlashTower = function () {
+	  return this.type === 'flashTower';
+	};
+
+	Tower.prototype.isHeavyDamageTower = function () {
+	  return this.type === 'heavyDamageTower';
+	};
+
+	Tower.prototype.isContinuousFireTower = function () {
+	  return this.type === 'continuousFireTower';
+	};
+
+	module.exports = Tower;
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Tower = __webpack_require__(41);
+
+	function FlashTower(coord) {
+	  Tower.call(this, coord);
+	  this.damage = 5;
+	  this.range = 160;
+	  this.fireRateRef = 1600;
+	  this.fireRate = 1600;
+	  this.timeSinceLastShot = new Date().getTime() - this.fireRate;
+	  this.price = 200;
+	  this.type = 'flashTower';
+	}
+
+	FlashTower.prototype = Object.create(Tower.prototype);
+
+	FlashTower.prototype.constructor = FlashTower;
+
+	FlashTower.prototype.shoot = function (enemies) {
+	  var currentTime = new Date().getTime();
+	  var enemiesToShoot = this.enemiesWithinRange(enemies);
+
+	  if (this.canShoot(currentTime) && enemiesToShoot.length > 0) {
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+
+	    try {
+	      for (var _iterator = enemiesToShoot[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	        var enemy = _step.value;
+	        enemy.hit(this.damage);
+	      }
+	    } catch (err) {
+	      _didIteratorError = true;
+	      _iteratorError = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion && _iterator['return']) {
+	          _iterator['return']();
+	        }
+	      } finally {
+	        if (_didIteratorError) {
+	          throw _iteratorError;
+	        }
+	      }
+	    }
+
+	    this.timeSinceLastShot = currentTime;
+	    return { enemy: null, tower: this };
+	  }
+	};
+
+	module.exports = FlashTower;
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Tower = __webpack_require__(41);
+
+	function HeavyDamageTower(coord) {
+	  Tower.call(this, coord);
+	  this.damage = 50;
+	  this.range = 150;
+	  this.fireRateRef = 2500;
+	  this.fireRate = 2500;
+	  this.timeSinceLastShot = new Date().getTime() - this.fireRate;
+	  this.price = 175;
+	  this.type = 'heavyDamageTower';
+	}
+
+	HeavyDamageTower.prototype = Object.create(Tower.prototype);
+
+	HeavyDamageTower.prototype.constructor = HeavyDamageTower;
+
+	module.exports = HeavyDamageTower;
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Tower = __webpack_require__(41);
+
+	function ContinuousFireTower(coord) {
+	  Tower.call(this, coord);
+	  this.damage = 5;
+	  this.range = 90;
+	  this.fireRateRef = 200;
+	  this.fireRate = 200;
+	  this.timeSinceLastShot = new Date().getTime() - this.fireRate;
+	  this.price = 150;
+	  this.type = 'continuousFireTower';
+	}
+
+	ContinuousFireTower.prototype = Object.create(Tower.prototype);
+
+	ContinuousFireTower.prototype.constructor = ContinuousFireTower;
+
+	module.exports = ContinuousFireTower;
+
+/***/ },
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Animation = __webpack_require__(46);
+
+	var AnimationEngine = {
+	  animations: [],
+	  updateAnimations: function updateAnimations() {
+	    this.animations.forEach(function (animation) {
+	      return animation.setCurrentAnimationFrame();
+	    });
+	    this.animations = this.animations.filter(function (animation) {
+	      return animation.active;
+	    });
+	  },
+	  triggerAnimation: function triggerAnimation(shotEvent) {
+	    this.animations.push(new Animation(shotEvent, 'fire'));
+	    this.animations.push(new Animation(shotEvent, 'hit'));
+	  }
+	};
+
+	module.exports = AnimationEngine;
+
+/***/ },
+/* 46 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var SimpleTowerAnimation = __webpack_require__(47);
+	var FlashTowerAnimation = __webpack_require__(48);
+	var ContinuousFireTowerAnimation = __webpack_require__(49);
+	var EnemyHitAnimation = __webpack_require__(50);
+	var EnemyHitMediumAnimation = __webpack_require__(51);
+	var EnemyHitRainbowAnimation = __webpack_require__(52);
+
+	var lodash = __webpack_require__(3);
+
+	var Animation = function Animation(shotEvent, nature) {
+	  this.tower = shotEvent.tower;
+	  this.enemy = shotEvent.enemy;
+	  this.active = true;
+	  this.frameIndex = 0;
+	  this.nature = nature;
+	  this.createAnimationFrames(shotEvent.tower.type);
+	};
+
+	Animation.prototype.createAnimationFrames = function (type) {
+	  var animation = getAnimation(type, this.nature);
+	  this.frames = animation.frames;
+	  this.setImageSource(this.frames, animation.source);
+	};
+
+	Animation.prototype.setImageSource = function (frames, imageLocation) {
+	  for (var i = 1; i <= lodash.size(frames); i++) {
+	    frames[i].src = '' + imageLocation + i + '.png';
+	  }
+	};
+
+	Animation.prototype.setCurrentAnimationFrame = function () {
+	  this.frameIndex += 1;
+	  if (this.frameIndex + 1 < Object.keys(this.frames).length) {
+	    this.setCurrentFrame();
+	  } else {
+	    this.active = false;
+	  }
+	};
+
+	Animation.prototype.setCurrentFrame = function () {
+	  this.currentFrame = this.frames[Math.round(this.frameIndex) % Object.keys(this.frames).length + 1];
+	  this.active = true;
+	};
+
+	function getAnimation(type, nature) {
+	  if (nature === 'fire') {
+	    switch (type) {
+	      case 'simpleTower':
+	        return new SimpleTowerAnimation();
+	      case 'flashTower':
+	        return new FlashTowerAnimation();
+	      case 'continuousFireTower':
+	        return new SimpleTowerAnimation();
+	      case 'heavyDamageTower':
+	        return new SimpleTowerAnimation();
+	    }
+	  } else if (nature === 'hit') {
+	    switch (type) {
+	      case 'simpleTower':
+	        return new EnemyHitRainbowAnimation();
+	      case 'flashTower':
+	        return new EnemyHitAnimation();
+	      case 'continuousFireTower':
+	        return new EnemyHitAnimation();
+	      case 'heavyDamageTower':
+	        return new EnemyHitMediumAnimation();
+	    }
+	  }
+	}
+
+	module.exports = Animation;
+
+/***/ },
+/* 47 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var SimpleEnemyFire = function SimpleEnemyFire() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image(),
+	    10: new Image(),
+	    11: new Image(),
+	    12: new Image()
+	  };
+	  this.source = 'sprites/tower-fire/fire-explosion';
+	};
+
+	module.exports = SimpleEnemyFire;
+
+/***/ },
+/* 48 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var FlashTower = function FlashTower() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image(),
+	    10: new Image()
+	  };
+	  this.source = 'sprites/circles-hit/circles';
+	};
+
+	module.exports = FlashTower;
+
+/***/ },
+/* 49 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var ContinuousTowerFire = function ContinuousTowerFire() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image(),
+	    10: new Image(),
+	    11: new Image(),
+	    12: new Image()
+	  };
+	  this.source = 'sprites/laser-beam/laser-beam';
+	};
+
+	module.exports = ContinuousTowerFire;
+
+/***/ },
+/* 50 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var EnemyHitAnimation = function EnemyHitAnimation() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image()
+	  };
+	  this.source = 'sprites/enemy-hit/explosion-hit';
+	};
+
+	module.exports = EnemyHitAnimation;
+
+/***/ },
+/* 51 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var EnemyHitMediumAnimation = function EnemyHitMediumAnimation() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image(),
+	    10: new Image(),
+	    11: new Image(),
+	    12: new Image(),
+	    13: new Image(),
+	    14: new Image(),
+	    15: new Image()
+	  };
+	  this.source = 'sprites/medium-explosion/medium-explosion';
+	};
+
+	module.exports = EnemyHitMediumAnimation;
+
+/***/ },
+/* 52 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var EnemyHitRainbowAnimation = function EnemyHitRainbowAnimation() {
+	  this.frames = {
+	    1: new Image(),
+	    2: new Image(),
+	    3: new Image(),
+	    4: new Image(),
+	    5: new Image(),
+	    6: new Image(),
+	    7: new Image(),
+	    8: new Image(),
+	    9: new Image(),
+	    10: new Image(),
+	    11: new Image(),
+	    12: new Image()
+	  };
+	  this.source = 'sprites/rainbow-explosion/rainbow';
+	};
+
+	module.exports = EnemyHitRainbowAnimation;
+
+/***/ },
+/* 53 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var CanvasManipulator = {
+
+	  drawBoard: function drawBoard(ctx, game, images) {
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+
+	    try {
+	      for (var _iterator = game.board.tiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	        var _step$value = _step.value;
+	        var type = _step$value.type;
+	        var x = _step$value.x;
+	        var y = _step$value.y;
+
+	        ctx.drawImage(images[type], x, y);
+	      }
+	    } catch (err) {
+	      _didIteratorError = true;
+	      _iteratorError = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion && _iterator['return']) {
+	          _iterator['return']();
+	        }
+	      } finally {
+	        if (_didIteratorError) {
+	          throw _iteratorError;
+	        }
+	      }
+	    }
+	  },
+
+	  drawEnemies: function drawEnemies(ctx, game, sprites) {
+	    var _iteratorNormalCompletion2 = true;
+	    var _didIteratorError2 = false;
+	    var _iteratorError2 = undefined;
+
+	    try {
+	      for (var _iterator2 = game.retrieveAliveEnemies()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	        var enemy = _step2.value;
+
+	        ctx.drawImage(sprites[enemy.type].currentFrame, enemy.x, enemy.y);
+	      }
+	    } catch (err) {
+	      _didIteratorError2 = true;
+	      _iteratorError2 = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+	          _iterator2['return']();
+	        }
+	      } finally {
+	        if (_didIteratorError2) {
+	          throw _iteratorError2;
+	        }
+	      }
+	    }
+	  },
+
+	  drawAnimations: function drawAnimations(ctx, animationEngine) {
+	    var _iteratorNormalCompletion3 = true;
+	    var _didIteratorError3 = false;
+	    var _iteratorError3 = undefined;
+
+	    try {
+	      for (var _iterator3 = animationEngine.animations[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	        var animation = _step3.value;
+
+	        this.routeAnimation(animation, ctx);
+	      }
+	    } catch (err) {
+	      _didIteratorError3 = true;
+	      _iteratorError3 = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion3 && _iterator3['return']) {
+	          _iterator3['return']();
+	        }
+	      } finally {
+	        if (_didIteratorError3) {
+	          throw _iteratorError3;
+	        }
+	      }
+	    }
+	  },
+
+	  routeAnimation: function routeAnimation(a, ctx) {
+	    if (a.nature === 'fire') {
+	      if (a.tower.isFlashTower()) {
+	        ctx.drawImage(a.currentFrame, a.tower.x - a.tower.range / 2, a.tower.y - a.tower.range / 2);
+	      } else {
+	        this.rotateAndDrawImage(ctx, a);
+	      }
+	    } else if (a.nature === 'hit' && a.enemy) {
+	      if (a.tower.isHeavyDamageTower()) {
+	        ctx.drawImage(a.currentFrame, a.enemy.x - 5, a.enemy.y - 30);
+	      } else {
+	        ctx.drawImage(a.currentFrame, a.enemy.x, a.enemy.y - 11);
+	      }
+	    }
+	  },
+
+	  rotateAndDrawImage: function rotateAndDrawImage(ctx, animation) {
+	    var angleInRad = Math.atan2(-(animation.enemy.x + 25 - animation.tower.x), animation.enemy.y + 25 - animation.tower.y);
+	    ctx.translate(animation.tower.x, animation.tower.y);
+	    ctx.rotate(angleInRad);
+	    ctx.drawImage(animation.currentFrame, -25, 25);
+	    ctx.rotate(-angleInRad);
+	    ctx.translate(-animation.tower.x, -animation.tower.y);
+	  },
+
+	  drawTowers: function drawTowers(ctx, game, sprites) {
+	    var _iteratorNormalCompletion4 = true;
+	    var _didIteratorError4 = false;
+	    var _iteratorError4 = undefined;
+
+	    try {
+	      for (var _iterator4 = game.getTowerTiles()[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	        var tile = _step4.value;
+
+	        ctx.drawImage(sprites[tile.tower.type].currentFrame, tile.x, tile.y);
+	      }
+	    } catch (err) {
+	      _didIteratorError4 = true;
+	      _iteratorError4 = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion4 && _iterator4['return']) {
+	          _iterator4['return']();
+	        }
+	      } finally {
+	        if (_didIteratorError4) {
+	          throw _iteratorError4;
+	        }
+	      }
+	    }
+	  },
+
+	  drawTowerRange: function drawTowerRange(ctx, game) {
+	    if (game.board.currentTileIsABuildTile() && game.board.currentTile.hasTower()) {
+	      ctx.beginPath();
+	      ctx.arc(game.board.currentTile.centerX(), game.board.currentTile.centerY(), game.board.currentTile.tower.range, 0, 2 * Math.PI, false);
+	      ctx.stroke();
+	    }
+	  },
+
+	  simulateTowerRange: function simulateTowerRange(ctx, game, hoverTower) {
+	    if (game.board.currentTileIsAHighlightedBuildTile()) {
+	      ctx.beginPath();
+	      ctx.arc(game.board.currentTile.centerX(), game.board.currentTile.centerY(), hoverTower.range, 0, 2 * Math.PI, false);
+	      ctx.stroke();
+	    }
+	  }
+	};
+
+	module.exports = CanvasManipulator;
 
 /***/ }
 /******/ ]);
