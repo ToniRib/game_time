@@ -10,19 +10,19 @@ describe('flash tower attributes', function (){
   it('tower has a damage amount', function (){
     let tower = new FlashTower({ x: 1, y: 1 });
     assert.typeOf(tower.damage, 'number');
-    assert.equal(10, tower.damage);
+    assert.equal(4, tower.damage);
   });
 
   it('tower has a range', function (){
     let tower = new FlashTower({ x: 1, y: 1 });
     assert.typeOf(tower.range, 'number');
-    assert.equal(140, tower.range);
+    assert.equal(160, tower.range);
   });
 
   it('tower has a fire-rate', function (){
     let tower = new FlashTower({ x: 1, y: 1 });
     assert.typeOf(tower.fireRate, 'number');
-    assert.equal(1000, tower.fireRate);
+    assert.equal(1600, tower.fireRate);
   });
 
   it('tower has an x coord', function (){
@@ -109,8 +109,8 @@ describe('flash tower shoot functionality', function() {
       let enemiesInRange = tower.enemiesWithinRange([enemy1, enemy2, enemy3]);
       tower.shoot(enemiesInRange);
 
-      assert.equal(120, enemy1.health);
-      assert.equal(120, enemy2.health);
+      assert.equal(50, enemy1.health);
+      assert.equal(50, enemy2.health);
     });
   });
 });
