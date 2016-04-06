@@ -1,4 +1,4 @@
-var assert = require('chai').assert;
+  var assert = require('chai').assert;
 const Game = require('../lib/game');
 const SimpleTower = require('../lib/simple-tower');
 
