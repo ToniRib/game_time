@@ -2,39 +2,44 @@ var assert = require('chai').assert;
 const FlashTower = require('../lib/flash-tower.js');
 const SimpleEnemy = require('../lib/simple-enemy.js');
 
-it('flash tower is a function', function (){
+it('flash tower is a function', function () {
   assert.typeOf(FlashTower, 'function');
 });
 
-describe('flash tower attributes', function (){
+describe('flash tower attributes', function () {
   it('tower has a damage amount', function (){
     let tower = new FlashTower({ x: 1, y: 1 });
     assert.typeOf(tower.damage, 'number');
     assert.equal(10, tower.damage);
   });
 
-  it('tower has a range', function (){
+  it('tower has a range', function () {
     let tower = new FlashTower({ x: 1, y: 1 });
     assert.typeOf(tower.range, 'number');
     assert.equal(140, tower.range);
   });
 
-  it('tower has a fire-rate', function (){
+  it('tower has a fire-rate', function () {
     let tower = new FlashTower({ x: 1, y: 1 });
     assert.typeOf(tower.fireRate, 'number');
     assert.equal(1000, tower.fireRate);
   });
 
-  it('tower has an x coord', function (){
+  it('tower has an x coord', function () {
     let tower = new FlashTower({ x: 1, y: 1 });
     assert.typeOf(tower.x, 'number');
     assert.equal(1, tower.x);
   });
 
-  it('tower has an y coord', function (){
+  it('tower has an y coord', function () {
     let tower = new FlashTower({ x: 1, y: 1 });
     assert.typeOf(tower.y, 'number');
     assert.equal(1, tower.y);
+  });
+
+  it('is a flash tower', function() {
+    let tower = new FlashTower({ x: 1, y: 1 });
+    assert(tower.isFlashTower());
   });
 });
 

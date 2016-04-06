@@ -215,6 +215,7 @@ canvas {
   position: absolute;
   text-align: center;
   top: 5px;
+  display: none;
 }
 
 .fast-foward-button a {
@@ -257,7 +258,7 @@ canvas {
 }
 
 .sell-button {
-  right: 290px;
+  right: 300px;
   position: absolute;
   text-align: center;
   top: 5px;
@@ -267,7 +268,7 @@ canvas {
 .sell-button a {
   font-size: 18px;
   height: 20px;
-  width: 40px;
+  width: 30px;
   cursor: hand;
   cursor: pointer;
 }
