@@ -71,6 +71,7 @@
 
 	var Game = function Game() {
 	  this.currentLevel = new Level(1, 1);
+	  this.finalLevel = 4;
 	  this.loadLevelParameters();
 	};
 
@@ -91,6 +92,11 @@
 	Game.prototype.loadNextLevel = function () {
 	  this.board.removeAllTowers();
 	  this.updateLevel(this.currentLevel.stage + 1, 1);
+	};
+
+	Game.prototype.loadPreviousLevel = function () {
+	  this.board.removeAllTowers();
+	  this.updateLevel(this.currentLevel.stage - 1, 1);
 	};
 
 	Game.prototype.loadNextDifficulty = function () {
@@ -243,6 +249,10 @@
 	  } else {
 	    return 'ongoing';
 	  }
+	};
+
+	Game.prototype.isOver = function () {
+	  return this.currentLevel.stage === this.finalLevel && this.currentLevel.difficulty === 3;
 	};
 
 	module.exports = Game;

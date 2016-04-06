@@ -88,8 +88,11 @@
 	var $nextDifficulty = $('#next-difficulty');
 	var $nextLevel = $('#next-level');
 	var $replay = $('#replay');
+	var $playAgain = $('#play-again');
 	var $replayLose = $('#replay-lose');
 	var $sellButton = $('#sell-button');
+	var $previousLevel = $('#previous-level');
+	var $previousLevelLose = $('#previous-level-lose');
 
 	loadImages();
 	loadSprites();
@@ -257,6 +260,14 @@
 	  requestAnimationFrame(startLoop);
 	}
 
+	function moveToPreviousLevel() {
+	  domManipulator.resetScreen(game, canvas);
+	  gameNotStarted = true;
+	  game.loadPreviousLevel();
+	  loadImages();
+	  requestAnimationFrame(startLoop);
+	}
+
 	function moveToNextDifficulty() {
 	  domManipulator.resetScreen(game, canvas);
 	  gameNotStarted = true;
@@ -268,6 +279,14 @@
 	  domManipulator.resetScreen(game, canvas);
 	  gameNotStarted = true;
 	  game.resetLevel();
+	  requestAnimationFrame(startLoop);
+	}
+
+	function resetGame() {
+	  domManipulator.resetScreen(game, canvas);
+	  gameNotStarted = true;
+	  game.updateLevel(1, 1);
+	  loadImages();
 	  requestAnimationFrame(startLoop);
 	}
 
@@ -300,6 +319,9 @@
 	$nextDifficulty.click(moveToNextDifficulty);
 	$replay.click(resetLevel);
 	$replayLose.click(resetLevel);
+	$playAgain.click(resetGame);
+	$previousLevel.click(moveToPreviousLevel);
+	$previousLevelLose.click(moveToPreviousLevel);
 
 /***/ },
 /* 2 */
@@ -312,6 +334,7 @@
 
 	var Game = function Game() {
 	  this.currentLevel = new Level(1, 1);
+	  this.finalLevel = 4;
 	  this.loadLevelParameters();
 	};
 
@@ -332,6 +355,11 @@
 	Game.prototype.loadNextLevel = function () {
 	  this.board.removeAllTowers();
 	  this.updateLevel(this.currentLevel.stage + 1, 1);
+	};
+
+	Game.prototype.loadPreviousLevel = function () {
+	  this.board.removeAllTowers();
+	  this.updateLevel(this.currentLevel.stage - 1, 1);
 	};
 
 	Game.prototype.loadNextDifficulty = function () {
@@ -484,6 +512,10 @@
 	  } else {
 	    return 'ongoing';
 	  }
+	};
+
+	Game.prototype.isOver = function () {
+	  return this.currentLevel.stage === this.finalLevel && this.currentLevel.difficulty === 3;
 	};
 
 	module.exports = Game;
@@ -13711,10 +13743,13 @@
 	var $moneyAmount = $('#money-amount');
 	var $sellButton = $('#sell-button');
 	var $winScreen = $('#win-screen');
+	var $finalWinScreen = $('#final-win-screen');
 	var $loseScreen = $('#lose-screen');
 	var $fastFowardButton = $('#fast-foward-button');
 	var $startButton = $('#start-button');
 	var $nextDifficulty = $('#next-difficulty');
+	var $previousLevel = $('#previous-level');
+	var $previousLevelLose = $('#previous-level-lose');
 
 	var domManipulator = {
 	  getTowerPrice: function getTowerPrice(button) {
@@ -13756,13 +13791,30 @@
 	  displayWinScreen: function displayWinScreen(game, canvas) {
 	    $(canvas).hide();
 	    $fastFowardButton.hide();
-	    $winScreen.show();
-	    this.showStars(game);
 
+	    if (game.isOver()) {
+	      $finalWinScreen.show();
+	    } else {
+	      $winScreen.show();
+	      this.showStars(game);
+	      this.nextDifficultyDisplay(game);
+	      this.previousLevelDisplay(game);
+	    }
+	  },
+
+	  nextDifficultyDisplay: function nextDifficultyDisplay(game) {
 	    if (game.currentLevel.difficulty === 3) {
 	      $nextDifficulty.hide();
 	    } else {
 	      $nextDifficulty.show();
+	    }
+	  },
+
+	  previousLevelDisplay: function previousLevelDisplay(game) {
+	    if (game.currentLevel.stage === 1) {
+	      $previousLevel.hide();
+	    } else {
+	      $previousLevel.show();
 	    }
 	  },
 
@@ -13777,11 +13829,13 @@
 	    $(canvas).hide();
 	    $fastFowardButton.hide();
 	    $loseScreen.show();
+	    this.previousLevelDisplay(game);
 	  },
 
 	  resetScreen: function resetScreen(game, canvas) {
 	    this.hideAllStars();
 	    $winScreen.hide();
+	    $finalWinScreen.hide();
 	    $loseScreen.hide();
 	    $(canvas).show();
 	    game.resetClickedTiles();
