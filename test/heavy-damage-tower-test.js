@@ -36,6 +36,11 @@ describe('heavy damage tower attributes', function (){
     let tower = new HeavyDamageTower({x: 1, y: 1});
     assert.typeOf(tower.price, 'number');
   });
+
+  it('is a heavy damage tower', function() {
+    let tower = new HeavyDamageTower({ x: 1, y: 1 });
+    assert(tower.isHeavyDamageTower());
+  });
 });
 
 describe('heavy damage tower shoot functionality', function() {

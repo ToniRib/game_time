@@ -128,6 +128,22 @@ describe('game tower logic', function(){
 
     assert.equal(towers.length, 1);
   });
+
+  it('returns true if it can afford a tower', function() {
+    let game = new Game();
+    game.updateLevel('test', 1);
+    game.monies = 100;
+
+    assert(game.canAffordTower(70));
+  });
+
+  it('returns false if it cannot afford a tower', function() {
+    let game = new Game();
+    game.updateLevel('test', 1);
+    game.monies = 100;
+
+    assert.equal(game.canAffordTower(150), false);
+  });
 });
 
 describe('game outcome logic', function(){
