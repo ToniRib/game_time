@@ -15,5 +15,4 @@ describe('it loads sprites', function(){
       assert.equal( SpriteLoader.sprites['quickEnemy'].frameIndex, 2);
       assert.equal( SpriteLoader.sprites['simpleEnemy'].frameIndex, 2);
   });
-
 });
