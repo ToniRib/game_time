@@ -55,16 +55,16 @@
 	'use strict';
 
 	var Game = __webpack_require__(2);
-	var domManipulator = __webpack_require__(27);
-	var ImageLoader = __webpack_require__(29);
-	var SpriteEngine = __webpack_require__(30);
-	var SimpleTower = __webpack_require__(40);
-	var FlashTower = __webpack_require__(42);
-	var HeavyDamageTower = __webpack_require__(43);
-	var ContinuousFireTower = __webpack_require__(44);
-	var animationEngine = __webpack_require__(45);
-	var CanvManip = __webpack_require__(53);
-	var $ = __webpack_require__(28);
+	var domManipulator = __webpack_require__(29);
+	var ImageLoader = __webpack_require__(31);
+	var SpriteEngine = __webpack_require__(32);
+	var SimpleTower = __webpack_require__(42);
+	var FlashTower = __webpack_require__(44);
+	var HeavyDamageTower = __webpack_require__(45);
+	var ContinuousFireTower = __webpack_require__(46);
+	var animationEngine = __webpack_require__(47);
+	var CanvManip = __webpack_require__(55);
+	var $ = __webpack_require__(30);
 
 	var game = new Game();
 	var imageLoader = undefined,
@@ -12901,8 +12901,8 @@
 	'use strict';
 
 	var getBoard = __webpack_require__(6);
-	var getMonies = __webpack_require__(16);
-	var getEnemies = __webpack_require__(17);
+	var getMonies = __webpack_require__(17);
+	var getEnemies = __webpack_require__(18);
 
 	var difficulties = {
 	  1: 5,
@@ -12932,14 +12932,16 @@
 	var boardTwo = __webpack_require__(9);
 	var boardThree = __webpack_require__(10);
 	var boardFour = __webpack_require__(11);
-	var Board = __webpack_require__(12);
+	var boardFive = __webpack_require__(12);
+	var Board = __webpack_require__(13);
 
 	var boards = {
 	  'test': new Board(boardTest),
 	  1: new Board(boardOne),
 	  2: new Board(boardTwo),
 	  3: new Board(boardThree),
-	  4: new Board(boardFour)
+	  4: new Board(boardFour),
+	  5: new Board(boardFive)
 	};
 
 	var GetBoard = function GetBoard(level) {
@@ -13225,13 +13227,100 @@
 
 /***/ },
 /* 12 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var boardFiveOptions = {
+	  16: { type: 'path', isTurn: false },
+	  17: { type: 'path', isTurn: false },
+	  18: { type: 'path', isTurn: false },
+	  19: { type: 'path', isTurn: false },
+	  20: { type: 'path', isTurn: false },
+	  21: { type: 'path', isTurn: false },
+	  22: { type: 'path', isTurn: false },
+	  23: { type: 'path', isTurn: false },
+	  24: { type: 'path', isTurn: false },
+	  25: { type: 'path', isTurn: false },
+	  26: { type: 'path', isTurn: false },
+	  27: { type: 'path', isTurn: false },
+	  28: { type: 'path', isTurn: false },
+	  29: { type: 'path', isTurn: false },
+	  30: { type: 'path', isTurn: true, direction: 'down' },
+	  46: { type: 'path', isTurn: false },
+	  62: { type: 'path', isTurn: true, direction: 'left' },
+	  61: { type: 'path', isTurn: false },
+	  60: { type: 'path', isTurn: true, direction: 'down' },
+	  76: { type: 'path', isTurn: false },
+	  92: { type: 'path', isTurn: true, direction: 'left' },
+	  91: { type: 'path', isTurn: false },
+	  90: { type: 'path', isTurn: true, direction: 'up' },
+	  74: { type: 'path', isTurn: false },
+	  58: { type: 'path', isTurn: true, direction: 'left' },
+	  57: { type: 'path', isTurn: false },
+	  56: { type: 'path', isTurn: true, direction: 'down' },
+	  72: { type: 'path', isTurn: false },
+	  88: { type: 'path', isTurn: true, direction: 'left' },
+	  87: { type: 'path', isTurn: false },
+	  86: { type: 'path', isTurn: true, direction: 'up' },
+	  70: { type: 'path', isTurn: false },
+	  54: { type: 'path', isTurn: true, direction: 'left' },
+	  53: { type: 'path', isTurn: false },
+	  52: { type: 'path', isTurn: true, direction: 'down' },
+	  68: { type: 'path', isTurn: false },
+	  84: { type: 'path', isTurn: true, direction: 'left' },
+	  83: { type: 'path', isTurn: false },
+	  82: { type: 'path', isTurn: true, direction: 'down' },
+	  98: { type: 'path', isTurn: false },
+	  114: { type: 'path', isTurn: true, direction: 'right' },
+	  115: { type: 'path', isTurn: true, direction: 'down' },
+	  131: { type: 'path', isTurn: false },
+	  147: { type: 'path', isTurn: true, direction: 'right' },
+	  148: { type: 'path', isTurn: false },
+	  149: { type: 'path', isTurn: true, direction: 'up' },
+	  133: { type: 'path', isTurn: false },
+	  117: { type: 'path', isTurn: true, direction: 'right' },
+	  118: { type: 'path', isTurn: false },
+	  119: { type: 'path', isTurn: true, direction: 'down' },
+	  135: { type: 'path', isTurn: false },
+	  151: { type: 'path', isTurn: true, direction: 'right' },
+	  152: { type: 'path', isTurn: false },
+	  153: { type: 'path', isTurn: true, direction: 'up' },
+	  137: { type: 'path', isTurn: false },
+	  121: { type: 'path', isTurn: true, direction: 'right' },
+	  122: { type: 'path', isTurn: false },
+	  123: { type: 'path', isTurn: true, direction: 'down' },
+	  139: { type: 'path', isTurn: false },
+	  155: { type: 'path', isTurn: true, direction: 'right' },
+	  156: { type: 'path', isTurn: false },
+	  157: { type: 'path', isTurn: true, direction: 'up' },
+	  141: { type: 'path', isTurn: false },
+	  125: { type: 'path', isTurn: true, direction: 'right' },
+	  126: { type: 'path', isTurn: true, direction: 'up' },
+	  110: { type: 'path', isTurn: false },
+	  94: { type: 'path', isTurn: true, direction: 'right' },
+	  95: { type: 'path', isTurn: false },
+	  2: { type: 'build' },
+	  11: { type: 'build' },
+	  39: { type: 'build' },
+	  47: { type: 'build' },
+	  65: { type: 'build' },
+	  105: { type: 'build' },
+	  93: { type: 'build' },
+	  150: { type: 'build' }
+	};
+
+	module.exports = boardFiveOptions;
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Tile = __webpack_require__(13);
-	var PathTile = __webpack_require__(14);
-	var BuildTile = __webpack_require__(15);
+	var Tile = __webpack_require__(14);
+	var PathTile = __webpack_require__(15);
+	var BuildTile = __webpack_require__(16);
 
 	var Board = function Board(options) {
 	  this.tiles = [];
@@ -13352,7 +13441,7 @@
 	module.exports = Board;
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -13392,12 +13481,12 @@
 	module.exports = Tile;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Tile = __webpack_require__(13);
+	var Tile = __webpack_require__(14);
 
 	var PathTile = function PathTile(position, isTurnPoint, direction) {
 	  Tile.call(this, position);
@@ -13427,12 +13516,12 @@
 	module.exports = PathTile;
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Tile = __webpack_require__(13);
+	var Tile = __webpack_require__(14);
 
 	var BuildTile = function BuildTile(position) {
 	  Tile.call(this, position);
@@ -13465,7 +13554,7 @@
 	module.exports = BuildTile;
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -13475,7 +13564,8 @@
 	  1: 260,
 	  2: 350,
 	  3: 470,
-	  4: 200
+	  4: 200,
+	  5: 400
 	};
 
 	var GetMonies = function GetMonies(level) {
@@ -13485,23 +13575,25 @@
 	module.exports = GetMonies;
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var enemiesOne = __webpack_require__(18);
-	var enemiesTwo = __webpack_require__(20);
-	var enemiesThree = __webpack_require__(23);
-	var enemiesFour = __webpack_require__(25);
-	var enemiesTest = __webpack_require__(26);
+	var enemiesOne = __webpack_require__(19);
+	var enemiesTwo = __webpack_require__(21);
+	var enemiesThree = __webpack_require__(24);
+	var enemiesFour = __webpack_require__(26);
+	var enemiesFive = __webpack_require__(27);
+	var enemiesTest = __webpack_require__(28);
 
 	var enemies = {
 	  'test': enemiesTest,
 	  1: enemiesOne,
 	  2: enemiesTwo,
 	  3: enemiesThree,
-	  4: enemiesFour
+	  4: enemiesFour,
+	  5: enemiesFive
 	};
 
 	var GetEnemies = function GetEnemies(level) {
@@ -13511,12 +13603,12 @@
 	module.exports = GetEnemies;
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var SimpleEnemy = __webpack_require__(19);
+	var SimpleEnemy = __webpack_require__(20);
 
 	var enemiesOne = {
 	  createEnemies: function createEnemies() {
@@ -13527,7 +13619,7 @@
 	module.exports = enemiesOne;
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -13589,14 +13681,14 @@
 	module.exports = SimpleEnemy;
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var SimpleEnemy = __webpack_require__(19);
-	var QuickEnemy = __webpack_require__(21);
-	var ToastEnemy = __webpack_require__(22);
+	var SimpleEnemy = __webpack_require__(20);
+	var QuickEnemy = __webpack_require__(22);
+	var ToastEnemy = __webpack_require__(23);
 
 	var enemiesTwo = {
 	  createEnemies: function createEnemies() {
@@ -13607,12 +13699,12 @@
 	module.exports = enemiesTwo;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var SimpleEnemy = __webpack_require__(19);
+	var SimpleEnemy = __webpack_require__(20);
 
 	var QuickEnemy = function QuickEnemy(params) {
 	  SimpleEnemy.call(this, params);
@@ -13630,12 +13722,12 @@
 	module.exports = QuickEnemy;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var SimpleEnemy = __webpack_require__(19);
+	var SimpleEnemy = __webpack_require__(20);
 
 	var ToastEnemy = function ToastEnemy(params) {
 	  SimpleEnemy.call(this, params);
@@ -13653,15 +13745,15 @@
 	module.exports = ToastEnemy;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var SimpleEnemy = __webpack_require__(19);
-	var QuickEnemy = __webpack_require__(21);
-	var MonsterEnemy = __webpack_require__(24);
-	var ToastEnemy = __webpack_require__(22);
+	var SimpleEnemy = __webpack_require__(20);
+	var QuickEnemy = __webpack_require__(22);
+	var MonsterEnemy = __webpack_require__(25);
+	var ToastEnemy = __webpack_require__(23);
 
 	var enemiesThree = {
 	  createEnemies: function createEnemies() {
@@ -13672,12 +13764,12 @@
 	module.exports = enemiesThree;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var SimpleEnemy = __webpack_require__(19);
+	var SimpleEnemy = __webpack_require__(20);
 
 	var MonsterEnemy = function MonsterEnemy(params) {
 	  SimpleEnemy.call(this, params);
@@ -13695,15 +13787,15 @@
 	module.exports = MonsterEnemy;
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var SimpleEnemy = __webpack_require__(19);
-	var QuickEnemy = __webpack_require__(21);
-	var MonsterEnemy = __webpack_require__(24);
-	var ToastEnemy = __webpack_require__(22);
+	var SimpleEnemy = __webpack_require__(20);
+	var QuickEnemy = __webpack_require__(22);
+	var MonsterEnemy = __webpack_require__(25);
+	var ToastEnemy = __webpack_require__(23);
 
 	var enemiesFour = {
 	  createEnemies: function createEnemies() {
@@ -13714,13 +13806,32 @@
 	module.exports = enemiesFour;
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var SimpleEnemy = __webpack_require__(19);
-	var QuickEnemy = __webpack_require__(21);
+	var SimpleEnemy = __webpack_require__(20);
+	var QuickEnemy = __webpack_require__(22);
+	var MonsterEnemy = __webpack_require__(25);
+	var ToastEnemy = __webpack_require__(23);
+
+	var enemiesFour = {
+	  createEnemies: function createEnemies() {
+	    return [new MonsterEnemy({ x: -50, y: 50 }), new MonsterEnemy({ x: -75, y: 50 }), new MonsterEnemy({ x: -100, y: 50 }), new SimpleEnemy({ x: -50, y: 50 }), new SimpleEnemy({ x: -75, y: 50 }), new SimpleEnemy({ x: -100, y: 50 }), new SimpleEnemy({ x: -125, y: 50 }), new SimpleEnemy({ x: -150, y: 50 }), new SimpleEnemy({ x: -175, y: 50 }), new SimpleEnemy({ x: -200, y: 50 }), new SimpleEnemy({ x: -225, y: 50 }), new SimpleEnemy({ x: -250, y: 50 }), new SimpleEnemy({ x: -275, y: 50 }), new SimpleEnemy({ x: -300, y: 50 }), new SimpleEnemy({ x: -325, y: 50 }), new SimpleEnemy({ x: -350, y: 50 }), new SimpleEnemy({ x: -375, y: 50 }), new SimpleEnemy({ x: -400, y: 50 }), new SimpleEnemy({ x: -425, y: 50 }), new QuickEnemy({ x: -5050, y: 50 }), new QuickEnemy({ x: -5075, y: 50 }), new QuickEnemy({ x: -5100, y: 50 }), new QuickEnemy({ x: -5125, y: 50 }), new QuickEnemy({ x: -5150, y: 50 }), new QuickEnemy({ x: -5175, y: 50 }), new QuickEnemy({ x: -5200, y: 50 }), new QuickEnemy({ x: -5225, y: 50 }), new QuickEnemy({ x: -5250, y: 50 }), new QuickEnemy({ x: -5275, y: 50 }), new QuickEnemy({ x: -5300, y: 50 }), new QuickEnemy({ x: -5325, y: 50 }), new QuickEnemy({ x: -5350, y: 50 }), new QuickEnemy({ x: -5375, y: 50 }), new QuickEnemy({ x: -5400, y: 50 }), new QuickEnemy({ x: -5425, y: 50 }), new QuickEnemy({ x: -10050, y: 50 }), new QuickEnemy({ x: -10075, y: 50 }), new QuickEnemy({ x: -10100, y: 50 }), new QuickEnemy({ x: -10125, y: 50 }), new QuickEnemy({ x: -10150, y: 50 }), new QuickEnemy({ x: -10175, y: 50 }), new QuickEnemy({ x: -10200, y: 50 }), new QuickEnemy({ x: -10225, y: 50 }), new QuickEnemy({ x: -10250, y: 50 }), new QuickEnemy({ x: -10275, y: 50 }), new QuickEnemy({ x: -10300, y: 50 }), new QuickEnemy({ x: -10325, y: 50 }), new QuickEnemy({ x: -10350, y: 50 }), new QuickEnemy({ x: -10375, y: 50 }), new QuickEnemy({ x: -10400, y: 50 }), new QuickEnemy({ x: -10425, y: 50 }), new ToastEnemy({ x: -50, y: 50 }), new ToastEnemy({ x: -250, y: 50 }), new ToastEnemy({ x: -450, y: 50 }), new ToastEnemy({ x: -650, y: 50 }), new ToastEnemy({ x: -850, y: 50 }), new ToastEnemy({ x: -1050, y: 50 }), new ToastEnemy({ x: -1250, y: 50 }), new ToastEnemy({ x: -1450, y: 50 }), new ToastEnemy({ x: -1650, y: 50 }), new ToastEnemy({ x: -1850, y: 50 }), new ToastEnemy({ x: -2050, y: 50 }), new ToastEnemy({ x: -2250, y: 50 }), new ToastEnemy({ x: -2450, y: 50 }), new ToastEnemy({ x: -2650, y: 50 }), new ToastEnemy({ x: -2850, y: 50 }), new ToastEnemy({ x: -3050, y: 50 })];
+	  }
+	};
+
+	module.exports = enemiesFour;
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var SimpleEnemy = __webpack_require__(20);
+	var QuickEnemy = __webpack_require__(22);
 
 	var enemiesTest = {
 	  createEnemies: function createEnemies() {
@@ -13731,12 +13842,12 @@
 	module.exports = enemiesTest;
 
 /***/ },
-/* 27 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var $ = __webpack_require__(28);
+	var $ = __webpack_require__(30);
 
 	var towerButtons = $('.tower-button');
 	var $numberOfLives = $('#number-of-lives');
@@ -13871,7 +13982,7 @@
 	module.exports = domManipulator;
 
 /***/ },
-/* 28 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -23719,7 +23830,7 @@
 
 
 /***/ },
-/* 29 */
+/* 31 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23744,14 +23855,16 @@
 	  1: 'sprites/dirt-tile.png',
 	  2: 'sprites/path.png',
 	  3: 'sprites/dirt-tile.png',
-	  4: 'sprites/path.png'
+	  4: 'sprites/metal-tile.png',
+	  5: 'sprites/metal-tile.png'
 	};
 
 	var grassSprites = {
 	  1: 'sprites/pixel-grass.jpg',
-	  2: 'sprites/desert-tiles.png',
-	  3: 'sprites/pixel-grass.jpg',
-	  4: 'sprites/desert-tiles.png'
+	  2: 'sprites/flower-tile.png',
+	  3: 'sprites/desert-tiles.png',
+	  4: 'sprites/space-tile.jpg',
+	  5: 'sprites/lava-tile.png'
 	};
 
 	ImageLoader.prototype.init = function (level) {
@@ -23772,12 +23885,12 @@
 	module.exports = ImageLoader;
 
 /***/ },
-/* 30 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Sprite = __webpack_require__(31);
+	var Sprite = __webpack_require__(33);
 
 	var SpriteEngine = {
 	  updateSprites: function updateSprites() {
@@ -23800,20 +23913,20 @@
 	module.exports = SpriteEngine;
 
 /***/ },
-/* 31 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var lodash = __webpack_require__(3);
-	var SimpleEnemySprite = __webpack_require__(32);
-	var QuickEnemySprite = __webpack_require__(33);
-	var MonsterEnemySprite = __webpack_require__(34);
-	var ToastEnemySprite = __webpack_require__(35);
-	var SimpleTowerSprite = __webpack_require__(36);
-	var ContinuousFireTowerSprite = __webpack_require__(37);
-	var HeavyDamageTowerSprite = __webpack_require__(38);
-	var FlashTowerSprite = __webpack_require__(39);
+	var SimpleEnemySprite = __webpack_require__(34);
+	var QuickEnemySprite = __webpack_require__(35);
+	var MonsterEnemySprite = __webpack_require__(36);
+	var ToastEnemySprite = __webpack_require__(37);
+	var SimpleTowerSprite = __webpack_require__(38);
+	var ContinuousFireTowerSprite = __webpack_require__(39);
+	var HeavyDamageTowerSprite = __webpack_require__(40);
+	var FlashTowerSprite = __webpack_require__(41);
 
 	var Sprite = function Sprite(type) {
 	  this.frameIndex = 1;
@@ -23865,7 +23978,7 @@
 	module.exports = Sprite;
 
 /***/ },
-/* 32 */
+/* 34 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23888,7 +24001,7 @@
 	module.exports = SimpleEnemySprite;
 
 /***/ },
-/* 33 */
+/* 35 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23910,7 +24023,7 @@
 	module.exports = QuickEnemySprite;
 
 /***/ },
-/* 34 */
+/* 36 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23932,7 +24045,7 @@
 	module.exports = MonsterEnemySprite;
 
 /***/ },
-/* 35 */
+/* 37 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23960,7 +24073,7 @@
 	module.exports = ToastEnemySprite;
 
 /***/ },
-/* 36 */
+/* 38 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23986,7 +24099,7 @@
 	module.exports = SimpleEnemySprite;
 
 /***/ },
-/* 37 */
+/* 39 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24010,7 +24123,7 @@
 	module.exports = ContinuousFireTowerSprite;
 
 /***/ },
-/* 38 */
+/* 40 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24040,7 +24153,7 @@
 	module.exports = HeavyDamageTowerSprite;
 
 /***/ },
-/* 39 */
+/* 41 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24066,12 +24179,12 @@
 	module.exports = FlashTowerSprite;
 
 /***/ },
-/* 40 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Tower = __webpack_require__(41);
+	var Tower = __webpack_require__(43);
 
 	function SimpleTower(coord) {
 	  this.x = coord.x;
@@ -24092,7 +24205,7 @@
 	module.exports = SimpleTower;
 
 /***/ },
-/* 41 */
+/* 43 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24153,12 +24266,12 @@
 	module.exports = Tower;
 
 /***/ },
-/* 42 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Tower = __webpack_require__(41);
+	var Tower = __webpack_require__(43);
 
 	function FlashTower(coord) {
 	  Tower.call(this, coord);
@@ -24212,12 +24325,12 @@
 	module.exports = FlashTower;
 
 /***/ },
-/* 43 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Tower = __webpack_require__(41);
+	var Tower = __webpack_require__(43);
 
 	function HeavyDamageTower(coord) {
 	  Tower.call(this, coord);
@@ -24237,12 +24350,12 @@
 	module.exports = HeavyDamageTower;
 
 /***/ },
-/* 44 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Tower = __webpack_require__(41);
+	var Tower = __webpack_require__(43);
 
 	function ContinuousFireTower(coord) {
 	  Tower.call(this, coord);
@@ -24262,12 +24375,12 @@
 	module.exports = ContinuousFireTower;
 
 /***/ },
-/* 45 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Animation = __webpack_require__(46);
+	var Animation = __webpack_require__(48);
 
 	var AnimationEngine = {
 	  animations: [],
@@ -24288,17 +24401,17 @@
 	module.exports = AnimationEngine;
 
 /***/ },
-/* 46 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var SimpleTowerAnimation = __webpack_require__(47);
-	var FlashTowerAnimation = __webpack_require__(48);
-	var ContinuousFireTowerAnimation = __webpack_require__(49);
-	var EnemyHitAnimation = __webpack_require__(50);
-	var EnemyHitMediumAnimation = __webpack_require__(51);
-	var EnemyHitRainbowAnimation = __webpack_require__(52);
+	var SimpleTowerAnimation = __webpack_require__(49);
+	var FlashTowerAnimation = __webpack_require__(50);
+	var ContinuousFireTowerAnimation = __webpack_require__(51);
+	var EnemyHitAnimation = __webpack_require__(52);
+	var EnemyHitMediumAnimation = __webpack_require__(53);
+	var EnemyHitRainbowAnimation = __webpack_require__(54);
 
 	var lodash = __webpack_require__(3);
 
@@ -24366,7 +24479,7 @@
 	module.exports = Animation;
 
 /***/ },
-/* 47 */
+/* 49 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24392,7 +24505,7 @@
 	module.exports = SimpleEnemyFire;
 
 /***/ },
-/* 48 */
+/* 50 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24416,7 +24529,7 @@
 	module.exports = FlashTower;
 
 /***/ },
-/* 49 */
+/* 51 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24442,7 +24555,7 @@
 	module.exports = ContinuousTowerFire;
 
 /***/ },
-/* 50 */
+/* 52 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24465,7 +24578,7 @@
 	module.exports = EnemyHitAnimation;
 
 /***/ },
-/* 51 */
+/* 53 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24494,7 +24607,7 @@
 	module.exports = EnemyHitMediumAnimation;
 
 /***/ },
-/* 52 */
+/* 54 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24520,7 +24633,7 @@
 	module.exports = EnemyHitRainbowAnimation;
 
 /***/ },
-/* 53 */
+/* 55 */
 /***/ function(module, exports) {
 
 	'use strict';
